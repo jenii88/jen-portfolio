@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closing — Jen</title>
+<meta name="description" content="Thanks for reading — how to get in touch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .closing-section { padding: 120px 0; max-width: 620px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .closing-section .eyebrow { }
+  .closing-section h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.2; }
+  .closing-section p { font-size: 16.5px; line-height: 1.6; color: var(--ink-70); margin: 0; }
+  .closing-cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wordmark"><a href="index.html">Jen.</a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="designs.html">Designs</a>
+    <a class="nav-link" href="automations.html">Automations</a>
+    <a class="nav-link" href="web-dev.html">Web / Dev</a>
+    <a class="nav-link" href="resume.html">Résumé</a>
+    <a class="pill-link" href="mailto:jen@example.com">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="closing-section">
+    <div class="eyebrow">The Back Cover</div>
+    <h2>Thanks for reading all the way to the end.</h2>
+    <p>If any of this is useful to you — the work, the way I think about it, or just where it might fit — I'd genuinely love to talk.</p>
+    <div class="closing-cta-row">
+      <a class="btn btn-primary" href="mailto:jen@example.com">Get In Touch</a>
+      <a class="btn btn-secondary" href="resume.pdf" download>Download Résumé</a>
+    </div>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Page navigation">
+    <a class="chapter-link prev" href="resume.html">
+      <span class="arrow">←</span>
+      <span class="chapter-meta">
+        <span class="chapter-label">Previous</span>
+        <span class="chapter-title">Résumé</span>
+      </span>
+    </a>
+    <a class="chapter-link next" href="index.html">
+      <span class="chapter-meta">
+        <span class="chapter-label">Back to</span>
+        <span class="chapter-title">The Start</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">© <span id="year"></span> Jen. Built by hand, deployed on Vercel.</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

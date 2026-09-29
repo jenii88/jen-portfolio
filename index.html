@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jen — Portfolio</title>
+<meta name="description" content="Business & systems analysis, automation, and design — from problem to shipped solution.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero { display: flex; flex-direction: column; gap: 18px; padding: 56px 0 40px 0; max-width: 780px; }
+  .hero-greeting { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; font-weight: 500; color: var(--water); }
+  .hero h1 { font-size: clamp(34px, 5vw, 58px); line-height: 1.08; letter-spacing: -0.01em; }
+  .hero p.lede { font-size: 18px; line-height: 1.55; color: var(--ink-70); max-width: 600px; margin: 0; }
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+
+  .facets-section { padding: 8px 0 44px 0; }
+  .facets-section h3 { font-size: 23px; margin-top: 6px; }
+  .facet-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 18px; }
+  @media (max-width: 900px) { .facet-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 560px) { .facet-grid { grid-template-columns: 1fr; } }
+  .facet { background: var(--card); border: 1px solid var(--ink-08); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: transform .18s ease, box-shadow .18s ease; }
+  .facet:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(33,29,24,0.09); }
+  .facet-icon { color: var(--water); }
+  .facet-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; transition: color .18s ease; }
+  .facet:hover .facet-title { color: var(--water); }
+  .facet-detail { font-size: 13px; line-height: 1.5; color: var(--ink-55); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .28s ease, opacity .28s ease; }
+  .facet:hover .facet-detail { max-height: 160px; opacity: 1; }
+  .facet-hint { font-size: 11px; color: var(--ink-32); transition: opacity .18s ease; }
+  .facet:hover .facet-hint { opacity: 0; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wordmark"><a href="index.html">Jen.</a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="designs.html">Designs</a>
+    <a class="nav-link" href="automations.html">Automations</a>
+    <a class="nav-link" href="web-dev.html">Web / Dev</a>
+    <a class="nav-link" href="resume.html">Résumé</a>
+    <a class="pill-link" href="mailto:jen@example.com">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-greeting">Hi, I'm Jen — nice to meet you.</div>
+    <div class="pill-row">
+      <span class="pill">Business &amp; Systems Analysis</span>
+      <span class="pill">Automation</span>
+      <span class="pill">Design &amp; Build</span>
+    </div>
+    <h1>From problem to shipped solution.</h1>
+    <p class="lede">I figure out how a business actually runs, automate the parts that shouldn't be manual anymore, and design + build the pages, campaigns, and interfaces that carry it to customers.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="automations.html">View Case Studies</a>
+      <a class="btn btn-secondary" href="resume.html#download">Download Résumé</a>
+    </div>
+  </section>
+
+  <section class="facets-section">
+    <div class="eyebrow">Beyond The Work</div>
+    <h3>Hover a tile to get to know me a little more.</h3>
+    <div class="facet-grid">
+
+      <div class="facet">
+        <svg class="facet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
+          <path d="M4 5.5C4 4.67 4.67 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5V5.5Z"/>
+          <path d="M20 5.5c0-.83-.67-1.5-1.5-1.5H13v16h5.5c.83 0 1.5-.67 1.5-1.5V5.5Z"/>
+        </svg>
+        <div class="facet-title">Writer &amp; Reader</div>
+        <div class="facet-hint">Hover to read more</div>
+        <div class="facet-detail">Huge reader — fantasy, historical fiction, philosophy, all of it. I write my own stories too. English degree, put to use.</div>
+      </div>
+
+      <div class="facet">
+        <svg class="facet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
+          <path d="M4 6h4M4 12h4M4 18h4"/>
+          <path d="M11 6h9M11 12h9M11 18h9"/>
+        </svg>
+        <div class="facet-title">Systems Thinker</div>
+        <div class="facet-hint">Hover to read more</div>
+        <div class="facet-detail">I like breaking things down into smaller steps — a workflow, a bug, a plan for the weekend. Analysis is just a habit at this point.</div>
+      </div>
+
+      <div class="facet">
+        <svg class="facet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M14.5 9.5 13 13l-3.5 1.5L11 11l3.5-1.5Z"/>
+        </svg>
+        <div class="facet-title">Always Learning Something</div>
+        <div class="facet-hint">Hover to read more</div>
+        <div class="facet-detail">Tennis, volleyball, running, swimming, rollerblading. Animal lover through and through, and I make time for friends and family.</div>
+      </div>
+
+      <div class="facet">
+        <svg class="facet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26">
+          <path d="M12 3a9 9 0 1 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4 0-1.1.9-2 2-2h1.5A3.5 3.5 0 0 0 20 10c0-3.9-3.6-7-8-7Z"/>
+          <circle cx="7.5" cy="10.5" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="10" cy="7" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="14" cy="7" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="16.5" cy="10.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        <div class="facet-title">Creative Outlets</div>
+        <div class="facet-hint">Hover to read more</div>
+        <div class="facet-detail">Painting, puzzles, games, design — I like making things with my hands as much as on a screen.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Page navigation">
+    <a class="chapter-link next" href="dedication.html">
+      <span class="chapter-meta">
+        <span class="chapter-label">Next</span>
+        <span class="chapter-title">Dedication</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">© <span id="year"></span> Jen. Built by hand, deployed on Vercel.</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

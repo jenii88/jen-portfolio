@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web / App Dev &amp; Coding — Jen</title>
+<meta name="description" content="Theme customization, hosted builds, and the languages and tools behind them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .flagship { background: var(--card); border-radius: var(--radius-lg); padding: 40px; display: flex; gap: 44px; box-shadow: 0 1px 3px rgba(33,29,24,0.06), 0 12px 32px rgba(33,29,24,0.05); position: relative; margin-top: 24px; }
+  .flagship .num-tag { position: absolute; top: 28px; right: 40px; }
+  .flagship-left { width: 380px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+  .flagship-right { flex-grow: 1; display: flex; flex-direction: column; gap: 22px; justify-content: center; }
+  .beat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-text); margin: 0 0 6px 0; }
+  .beat-body { font-size: 14.5px; line-height: 1.55; color: rgba(33,29,24,0.78); margin: 0; }
+  .more-grid { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+  .more-grid .card { flex: 1; min-width: 260px; }
+  .tools-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  @media (max-width: 900px) { .flagship { flex-direction: column; } .flagship-left { width: 100%; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wordmark"><a href="index.html">Jen.</a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="designs.html">Designs</a>
+    <a class="nav-link" href="automations.html">Automations</a>
+    <a class="nav-link active" href="web-dev.html">Web / Dev</a>
+    <a class="nav-link" href="resume.html">Résumé</a>
+    <a class="pill-link" href="mailto:jen@example.com">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <header class="page-header">
+    <div class="eyebrow">Web / App Dev &amp; Coding</div>
+    <h2>Where the code actually lives.</h2>
+    <p>Not just picking colors — going into the theme files and templates and making the site actually work the way it needs to.</p>
+  </header>
+
+  <section class="flagship">
+    <span class="num num-tag">Build&nbsp;01&nbsp;/&nbsp;04</span>
+    <div class="flagship-left">
+      <div>
+        <h3 style="font-size: 24px;">Shopify Theme Customization</h3>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+          <span class="tag tag-water">Liquid</span><span class="tag tag-water">CSS</span><span class="tag tag-water">JavaScript</span>
+        </div>
+      </div>
+      <div class="placeholder" style="height: 130px;">[ Before / after theme screenshot ]</div>
+    </div>
+    <div class="flagship-right">
+      <div>
+        <div class="beat-label">Problem</div>
+        <p class="beat-body">A purchased theme looked fine out of the box, but didn't match the brand direction or how the team actually needed to work.</p>
+      </div>
+      <div>
+        <div class="beat-label">Approach</div>
+        <p class="beat-body">Went into the theme code directly — Liquid, CSS, and JS — to adjust layout, styling, and functionality against specific requests, not just settings-panel tweaks.</p>
+      </div>
+      <div>
+        <div class="beat-label">Outcome</div>
+        <p class="beat-body">A site that looks custom without a custom price tag, and one I can keep adjusting myself instead of waiting on a developer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">More Builds</div>
+    <div class="more-grid">
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">02 / 04</div>
+        <div class="card-title">Hosted Project</div>
+        <p class="card-body">Built and deployed with Vercel, version-controlled through GitHub from first commit to live site.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">03 / 04</div>
+        <div class="card-title">Custom Theme Sections</div>
+        <p class="card-body">Reusable Liquid sections and snippets that give the team flexible, drag-and-drop page building without touching code.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">04 / 04</div>
+        <div class="card-title">Data Queries &amp; Cleanup</div>
+        <p class="card-body">SQL used to audit and clean up product data at scale — the unglamorous work that keeps everything else accurate.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="cluster-title">Languages &amp; Tools</div>
+    <div class="tools-row">
+      <span class="tag-code tag">JavaScript</span><span class="tag-code tag">HTML / CSS</span><span class="tag-code tag">Liquid</span><span class="tag-code tag">PHP</span><span class="tag-code tag">Python</span><span class="tag-code tag">Java</span><span class="tag-code tag">C / C++</span><span class="tag-code tag">SQL</span><span class="tag-code tag">GitHub</span><span class="tag-code tag">Vercel</span>
+    </div>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Page navigation">
+    <a class="chapter-link prev" href="designs.html">
+      <span class="arrow">←</span>
+      <span class="chapter-meta">
+        <span class="chapter-label">Previous</span>
+        <span class="chapter-title">Designs &amp; Campaigns</span>
+      </span>
+    </a>
+    <span class="chapter-num">03 / 04</span>
+    <a class="chapter-link next" href="resume.html">
+      <span class="chapter-meta">
+        <span class="chapter-label">Next</span>
+        <span class="chapter-title">Résumé</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </nav>
+
+</main>
+
+<footer class="site-footer">© <span id="year"></span> Jen. Built by hand, deployed on Vercel.</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
