@@ -240,33 +240,48 @@ img { max-width: 100%; display: block; }
   color: var(--ink-45);
 }
 
-/* ---------- Book-style page transitions ----------
+/* ---------- Book-style page transitions (vertical) ----------
    Native cross-document View Transition: when supported (Chromium
-   126+), navigating between pages slides the old page out and the
-   new one in like a page turning. Unsupported browsers (Safari,
-   Firefox) just ignore this block and navigate normally — no JS,
-   no errors, pure progressive enhancement. */
+   126+), moving between pages slides the old page up and the new one
+   rises in from below, like scrolling down the book. Going backwards
+   (book.js tags it with the "back" type) reverses the motion.
+   Unsupported browsers (Safari, Firefox) ignore this block and just
+   navigate normally. */
 @view-transition {
   navigation: auto;
 }
 
 ::view-transition-group(root) {
-  animation-duration: 0.5s;
+  animation-duration: 0.55s;
   animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
 }
 ::view-transition-old(root) {
-  animation-name: page-turn-out;
+  animation-name: page-out-up;
 }
 ::view-transition-new(root) {
-  animation-name: page-turn-in;
+  animation-name: page-in-up;
 }
-@keyframes page-turn-out {
-  from { transform: translateX(0) scale(1); opacity: 1; }
-  to   { transform: translateX(-5%) scale(0.97); opacity: 0; }
+html:active-view-transition-type(back)::view-transition-old(root) {
+  animation-name: page-out-down;
 }
-@keyframes page-turn-in {
-  from { transform: translateX(5%) scale(0.97); opacity: 0; }
-  to   { transform: translateX(0) scale(1); opacity: 1; }
+html:active-view-transition-type(back)::view-transition-new(root) {
+  animation-name: page-in-down;
+}
+@keyframes page-out-up {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to   { transform: translateY(-6%) scale(0.98); opacity: 0; }
+}
+@keyframes page-in-up {
+  from { transform: translateY(8%) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes page-out-down {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to   { transform: translateY(6%) scale(0.98); opacity: 0; }
+}
+@keyframes page-in-down {
+  from { transform: translateY(-8%) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 /* ---------- Chapter nav (book-style prev/next) ---------- */
@@ -294,8 +309,8 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
   transition: transform .18s ease;
 }
-.chapter-link.prev:hover .arrow { transform: translateX(-4px); }
-.chapter-link.next:hover .arrow { transform: translateX(4px); }
+.chapter-link.prev:hover .arrow { transform: translateY(-4px); }
+.chapter-link.next:hover .arrow { transform: translateY(4px); }
 .chapter-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .chapter-link.next .chapter-meta { align-items: flex-end; text-align: right; }
 .chapter-label {
