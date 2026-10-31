@@ -4,27 +4,28 @@
    ========================================================================== */
 
 :root {
-  --paper: #F7EFE1;
-  --card: #FFFDF9;
-  --ink: #211D18;
-  --ink-70: rgba(33, 29, 24, 0.7);
-  --ink-55: rgba(33, 29, 24, 0.55);
-  --ink-45: rgba(33, 29, 24, 0.45);
-  --ink-32: rgba(33, 29, 24, 0.32);
-  --ink-12: rgba(33, 29, 24, 0.12);
-  --ink-08: rgba(33, 29, 24, 0.08);
+  --paper: #FFFFFF;
+  --card: #F4F2E2;
+  --ink: #1F3B28;
+  --ink-70: rgba(31, 59, 40, 0.7);
+  --ink-55: rgba(31, 59, 40, 0.55);
+  --ink-45: rgba(31, 59, 40, 0.45);
+  --ink-32: rgba(31, 59, 40, 0.32);
+  --ink-12: rgba(31, 59, 40, 0.12);
+  --ink-08: rgba(31, 59, 40, 0.08);
 
-  --water: #2C8FB4;
-  --water-dark: #1F6E8C;
-  --water-tint: rgba(44, 143, 180, 0.1);
+  --water: #278B9E;
+  --water-dark: #1B6C7C;
+  --water-hover: #14515D;
+  --water-tint: rgba(39, 139, 158, 0.1);
 
-  --gold: #C98A3E;
-  --gold-text: #9C7233;
-  --gold-tint: rgba(201, 138, 62, 0.14);
+  --gold: #E7D64B;
+  --gold-text: #2D6438;
+  --gold-tint: rgba(231, 214, 75, 0.22);
 
-  --coral: #D9553C;
-  --coral-text: #B23F2A;
-  --coral-tint: rgba(217, 85, 60, 0.09);
+  --coral: #4C975E;
+  --coral-text: #2D6438;
+  --coral-tint: rgba(76, 151, 94, 0.12);
 
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -60,11 +61,23 @@ img { max-width: 100%; display: block; }
 
 /* ---------- Nav ---------- */
 .site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 22px 40px;
-  border-bottom: 1px solid var(--ink-08);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background-color .25s ease, border-color .25s ease, padding .25s ease;
+}
+/* once you scroll off the cover the nav stays pinned, with a soft frosted backing */
+.site-nav.is-scrolled {
+  padding-top: 14px; padding-bottom: 14px;
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom-color: var(--ink-08);
 }
 .site-nav .wordmark {
   font-family: 'Fraunces', serif;
@@ -96,9 +109,9 @@ img { max-width: 100%; display: block; }
   transform-origin: left;
   transition: transform .2s ease;
 }
-.nav-link:hover { color: var(--water); }
+.nav-link:hover { color: var(--water-dark); }
 .nav-link:hover::after { transform: scaleX(1); }
-.nav-link.active { color: var(--water); }
+.nav-link.active { color: var(--water-dark); }
 .nav-link.active::after { transform: scaleX(1); }
 
 /* ---------- Buttons ---------- */
@@ -118,13 +131,13 @@ img { max-width: 100%; display: block; }
 }
 .btn-primary {
   color: var(--paper);
-  background: var(--water);
+  background: var(--water-dark);
 }
-.btn-primary:hover { background: var(--water-dark); transform: translateY(-2px); }
+.btn-primary:hover { background: var(--water-hover); transform: translateY(-2px); }
 .btn-secondary {
   color: var(--ink);
   background: transparent;
-  border: 1.5px solid rgba(33,29,24,0.25);
+  border: 1.5px solid rgba(31, 59, 40, 0.3);
   padding: 12.5px 24.5px;
 }
 .btn-secondary:hover { border-color: var(--ink); transform: translateY(-2px); }
@@ -136,9 +149,10 @@ img { max-width: 100%; display: block; }
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  background: var(--water);
+  background: var(--water-dark);
   color: var(--paper);
 }
+.pill-link:hover { background: var(--water-hover); }
 
 /* ---------- Small components ---------- */
 .eyebrow {
@@ -146,14 +160,14 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-45);
+  color: var(--ink-70);
 }
 .cluster-title {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--water);
+  color: var(--water-dark);
   margin: 0 0 10px 0;
 }
 .pill {
@@ -194,7 +208,7 @@ img { max-width: 100%; display: block; }
   padding: 24px;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(33,29,24,0.08); }
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(31, 59, 40,0.08); }
 
 .card-title {
   font-family: 'Fraunces', serif;
@@ -205,12 +219,12 @@ img { max-width: 100%; display: block; }
 .card-body {
   font-size: 13.5px;
   line-height: 1.5;
-  color: var(--ink-55);
+  color: var(--ink-70);
   margin: 0;
 }
 
 .placeholder {
-  border: 1.5px dashed rgba(33,29,24,0.22);
+  border: 1.5px dashed rgba(31, 59, 40,0.22);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -227,7 +241,7 @@ img { max-width: 100%; display: block; }
   padding: 64px 0 24px 0;
 }
 .page-header h2 { font-size: 34px; margin-bottom: 8px; }
-.page-header p { font-size: 15.5px; color: rgba(33,29,24,0.6); max-width: 640px; margin: 0; }
+.page-header p { font-size: 15.5px; color: rgba(31, 59, 40, 0.72); max-width: 640px; margin: 0; }
 
 .section { padding: 24px 0; }
 
@@ -237,51 +251,7 @@ img { max-width: 100%; display: block; }
   padding: 32px 40px 48px 40px;
   text-align: center;
   font-size: 13px;
-  color: var(--ink-45);
-}
-
-/* ---------- Book-style page transitions (vertical) ----------
-   Native cross-document View Transition: when supported (Chromium
-   126+), moving between pages slides the old page up and the new one
-   rises in from below, like scrolling down the book. Going backwards
-   (book.js tags it with the "back" type) reverses the motion.
-   Unsupported browsers (Safari, Firefox) ignore this block and just
-   navigate normally. */
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-group(root) {
-  animation-duration: 0.55s;
-  animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
-}
-::view-transition-old(root) {
-  animation-name: page-out-up;
-}
-::view-transition-new(root) {
-  animation-name: page-in-up;
-}
-html:active-view-transition-type(back)::view-transition-old(root) {
-  animation-name: page-out-down;
-}
-html:active-view-transition-type(back)::view-transition-new(root) {
-  animation-name: page-in-down;
-}
-@keyframes page-out-up {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to   { transform: translateY(-6%) scale(0.98); opacity: 0; }
-}
-@keyframes page-in-up {
-  from { transform: translateY(8%) scale(0.98); opacity: 0; }
-  to   { transform: translateY(0) scale(1); opacity: 1; }
-}
-@keyframes page-out-down {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to   { transform: translateY(6%) scale(0.98); opacity: 0; }
-}
-@keyframes page-in-down {
-  from { transform: translateY(-8%) scale(0.98); opacity: 0; }
-  to   { transform: translateY(0) scale(1); opacity: 1; }
+  color: var(--ink-70);
 }
 
 /* ---------- Chapter nav (book-style prev/next) ---------- */
@@ -318,7 +288,7 @@ html:active-view-transition-type(back)::view-transition-new(root) {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-45);
+  color: var(--ink-70);
 }
 .chapter-title {
   font-family: 'Fraunces', serif;
@@ -338,8 +308,13 @@ html:active-view-transition-type(back)::view-transition-new(root) {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .site-nav { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .nav-links { gap: 18px; }
+  .site-nav { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 22px 10px; }
+  .site-nav.is-scrolled { padding-top: 10px; padding-bottom: 8px; }
+  .site-nav .wordmark { font-size: 20px; }
+  .nav-links { gap: 10px; flex-wrap: nowrap; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { font-size: 13px; white-space: nowrap; }
+  .pill-link { white-space: nowrap; padding: 6px 14px; font-size: 13px; }
   .wrap { padding: 0 22px; }
   .grid-4, .grid-3 { grid-template-columns: 1fr !important; }
   .flex-row { flex-direction: column !important; }
@@ -348,4 +323,10 @@ html:active-view-transition-type(back)::view-transition-new(root) {
   .chapter-nav { flex-wrap: wrap; row-gap: 14px; }
   .chapter-link { max-width: 100%; }
   .chapter-num { order: 3; width: 100%; text-align: center; }
+}
+
+@media (max-width: 380px) {
+  .nav-links { gap: 8px; }
+  .nav-link { font-size: 12.5px; }
+  .pill-link { padding: 6px 11px; font-size: 12.5px; }
 }

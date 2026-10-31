@@ -1,33 +1,40 @@
 # Jen — Portfolio Site
 
-A plain HTML/CSS/JS portfolio site (no build step, no framework). Structured
-like a book: Cover → Dedication → Automations & Systems → Designs &
-Campaigns → Web/App Dev & Coding → Résumé → Closing, with a "chapter nav"
-at the bottom of each page and a page-turn transition between them in
-Chrome/Edge (via the CSS View Transitions API — it just degrades to a normal
-page load in Safari/Firefox, no errors).
+A plain HTML/CSS/JS portfolio site (no build step, no framework), built as one
+long scrolling page that reads like a book: Cover → Dedication → Ch. 1
+Automations & Systems → Ch. 2 Designs & Campaigns → Ch. 3 Web/App Dev &
+Coding → Ch. 4 Résumé → Closing (which links back to the Cover).
+
+- The top nav is pinned and jumps to each chapter; the chapter you are in is
+  highlighted.
+- Designs is a full-screen panel: the page snaps to it as you scroll, the row
+  of books slides up into view, and clicking a book opens the pop-up.
+- Only the cover has the grain texture (it is baked into the cover images).
 
 ## Files
 
-- `index.html` — Cover (Home)
-- `dedication.html` — Dedication (skills snapshot)
-- `automations.html` — Chapter 1: Automations & Systems
-- `designs.html` — Chapter 2: Designs & Campaigns
-- `web-dev.html` — Chapter 3: Web / App Dev & Coding
-- `resume.html` — Chapter 4: Résumé
-- `closing.html` — Closing / back cover
+- `index.html` — the whole site (every section, the Designs pop-up and its script)
 - `styles.css` — shared design tokens + components
+- `assets/cover-desktop.jpg`, `assets/cover-phone.jpg` — original cover backgrounds
 - `resume.pdf` — placeholder résumé PDF (swap for the real one)
+- `dedication.html`, `automations.html`, `designs.html`, `web-dev.html`,
+  `resume.html`, `closing.html` — tiny redirect pages so old links still land
+  on the right section of `index.html`. You can delete them from the repo
+  whenever you like.
+
+## Where to edit things
+
+- Designs list (titles, tags, write-ups, screenshots, spine colours): the
+  `designs` array in the script at the bottom of `index.html`.
+- Everything else: edit the matching `<section id="...">` in `index.html`.
 
 ## Known placeholders still to fill in
 
-- Contact email: currently `jen@example.com` everywhere (nav pill, closing
-  page, résumé footer) — swap for your real one with a find-and-replace.
-- Résumé page: `[Your Title]`, `[Start Date]`, `[Degree Level]`,
-  `[University Name]`, `[Year]`.
-- Designs page: 7 dashed placeholder image blocks — swap in real
-  screenshots.
-- Web-Dev page: 1 dashed placeholder for a before/after theme screenshot.
+- Designs: write-ups and screenshots (dashed placeholder boxes) and the real
+  campaign names.
+- Web/Dev: one dashed placeholder for a before/after theme screenshot.
+- Cover: nothing placeholder, but the three "Beyond The Work" tiles are still
+  text-only.
 
 ## Deploy it — GitHub + Vercel
 

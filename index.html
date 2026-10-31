@@ -4,14 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jen — Portfolio</title>
-<meta name="description" content="Business & systems analysis, automation, and design — from problem to shipped solution.">
+<meta name="description" content="Business &amp; systems analysis, automation, and design — from problem to shipped solution.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,500..600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
-<script src="book.js"></script>
+<script>document.documentElement.className += ' js';</script>
 <style>
-  .hero { display: flex; flex-direction: column; gap: 18px; padding: 56px 0 40px 0; max-width: 780px; }
-  .hero-greeting { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; font-weight: 500; color: var(--water); }
+  /* ============ One long page ============ */
+  html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  .chapter { padding: 104px 0 72px; border-top: 1px solid var(--ink-08); }
+  .chapter .page-header { padding-top: 0; }
+  .back-top { font-size: 14px; font-weight: 500; color: var(--water-dark); text-decoration: none; margin-top: 6px; }
+  .back-top:hover { text-decoration: underline; }
+  @media (max-width: 900px) { .chapter { padding: 110px 0 56px; } }
+
+  /* ============ Cover ============ */
+  /* Full-bleed original background image. The grain is baked into the image, so it lives on the cover only. */
+  .site-cover {
+    position: relative;
+    min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center;
+    background: #DCEBE6 url("assets/cover-desktop.jpg") center / cover no-repeat;
+    isolation: isolate;
+  }
+  /* soft light scrim so text stays readable wherever the image gets deeper in colour */
+  .site-cover::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(95deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.38) 42%, rgba(255,255,255,0) 72%);
+  }
+  .site-cover > .wrap { width: 100%; }
+  @media (max-width: 700px) {
+    .site-cover { align-items: flex-start; background-image: url("assets/cover-phone.jpg"); }
+    .site-cover::before { background: linear-gradient(180deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.5) 55%, rgba(255,255,255,0.05) 100%); }
+    .site-cover .hero { padding-top: 128px; }
+  }
+  .hero { display: flex; flex-direction: column; gap: 18px; padding: 72px 0 56px 0; max-width: 780px; }
+  .hero-greeting { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; font-weight: 500; color: var(--water-dark); }
   .hero h1 { font-size: clamp(34px, 5vw, 58px); line-height: 1.08; letter-spacing: -0.01em; }
   .hero p.lede { font-size: 18px; line-height: 1.55; color: var(--ink-70); max-width: 600px; margin: 0; }
   .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -23,30 +53,276 @@
   @media (max-width: 900px) { .facet-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
   @media (max-width: 560px) { .facet-grid { grid-template-columns: 1fr; } }
   .facet { background: var(--card); border: 1px solid var(--ink-08); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: transform .18s ease, box-shadow .18s ease; }
-  .facet:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(33,29,24,0.09); }
+  .facet:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(31, 59, 40,0.09); }
   .facet-icon { color: var(--water); }
   .facet-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; transition: color .18s ease; }
-  .facet:hover .facet-title { color: var(--water); }
-  .facet-detail { font-size: 13px; line-height: 1.5; color: var(--ink-55); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .28s ease, opacity .28s ease; }
+  .facet:hover .facet-title { color: var(--water-dark); }
+  .facet-detail { font-size: 13px; line-height: 1.5; color: var(--ink-70); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .28s ease, opacity .28s ease; }
   .facet:hover .facet-detail { max-height: 160px; opacity: 1; }
-  .facet-hint { font-size: 11px; color: var(--ink-32); transition: opacity .18s ease; }
+  .facet-hint { font-size: 11px; color: var(--ink-70); transition: opacity .18s ease; }
   .facet:hover .facet-hint { opacity: 0; }
+
+  #beyond { padding: 80px 0 56px; }
+
+  /* ============ Dedication ============ */
+
+  .dedication-header { padding: 0 0 24px 0; max-width: 640px; }
+  .dedication-header .eyebrow { margin-bottom: 6px; }
+  .dedication-header h2 { font-family: 'Fraunces', serif; font-style: italic; font-size: 28px; font-weight: 500; line-height: 1.3; }
+  .dedication-header p { font-size: 15.5px; color: var(--ink-70); margin-top: 12px; }
+
+  .bring-section { padding: 24px 0 0 0; }
+  .bring-grid { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 14px; }
+  .bring-col { display: flex; flex-direction: column; gap: 6px; }
+  .bring-col .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .bring-grid { flex-direction: column; gap: 24px; } }
+
+  /* ============ Chapter 1 + 3: case-study cards ============ */
+
+  .flagship { background: var(--card); border-radius: var(--radius-lg); padding: 40px; display: flex; gap: 44px; box-shadow: 0 1px 3px rgba(31, 59, 40,0.06), 0 12px 32px rgba(31, 59, 40,0.05); position: relative; margin-top: 24px; }
+  .flagship .num-tag { position: absolute; top: 28px; right: 40px; }
+  .flagship-left { width: 380px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+  .flagship-right { flex-grow: 1; display: flex; flex-direction: column; gap: 22px; justify-content: center; }
+  .flow-row { display: flex; align-items: center; gap: 10px; }
+  .flow-box { flex: 1 1 0; min-width: 0; overflow-wrap: anywhere; font-size: 13.5px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--ink-12); border-radius: 10px; padding: 12px 16px; text-align: center; }
+  .flow-arrow { color: var(--ink-32); font-size: 18px; }
+  .beat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--coral-text); margin: 0 0 6px 0; }
+  .beat-body { font-size: 14.5px; line-height: 1.55; color: rgba(31, 59, 40,0.78); margin: 0; }
+  .more-grid { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+  .more-grid .card { flex: 1; min-width: 260px; }
+  @media (max-width: 900px) { .flagship { flex-direction: column; } .flagship-left { width: 100%; } }
+
+  .flow-row { gap: 6px; }
+  .flow-box { flex: 1 1 auto; padding: 12px 12px; }
+  .chapter .page-header .eyebrow { margin-bottom: 10px; }
+  .chapter .page-header p { line-height: 1.6; }
+  .tools-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  #web-dev .flagship-left { justify-content: center; }
+  @media (max-width: 900px) { .flagship .num-tag { position: static; align-self: flex-start; } }
+  @media (max-width: 560px) { .flagship { padding: 28px 22px; gap: 28px; } .flow-row { gap: 4px; } .flow-box { font-size: 12px; padding: 10px 6px; } .flow-arrow { font-size: 14px; } #resume .exp-col, #resume .edu-col { min-width: 0; } .shelf { overflow-x: clip; } }
+  /* ============ Chapter 4: résumé ============ */
+
+  .resume-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; padding: 0 0 24px 0; }
+  .resume-header .copy { display: flex; flex-direction: column; gap: 8px; }
+  .resume-header h2 { font-size: 34px; }
+  .resume-header p { font-size: 15.5px; color: rgba(31, 59, 40, 0.72); max-width: 560px; margin: 0; }
+
+  .exp-edu-row { display: flex; gap: 28px; align-items: stretch; flex-wrap: wrap; }
+  .exp-col { flex: 1.6; min-width: 320px; display: flex; flex-direction: column; gap: 16px; }
+  .edu-col { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 16px; }
+  .role-card { background: var(--card); border: 1px solid var(--ink-08); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .role-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+  .role-head .title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; }
+  .role-head .dates { font-size: 13px; color: var(--ink-70); }
+  .role-lines { display: flex; flex-direction: column; gap: 6px; }
+  .role-line { font-size: 14px; line-height: 1.7; color: rgba(31, 59, 40,0.75); }
+  .role-line::before { content: '—'; color: var(--water); margin-right: 8px; }
+  .edu-card { background: var(--card); border: 1px solid var(--ink-08); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 8px; }
+  .edu-card .title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; }
+  .edu-card .meta { font-size: 13.5px; color: var(--ink-70); }
+  .add-role { height: 90px; }
+
+  .skills-section { padding: 32px 0 0 0; }
+  .skills-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 18px; }
+  @media (max-width: 900px) { .skills-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .exp-edu-row { flex-direction: column; } }
+  @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } }
+  .skills-col .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* ============ Closing ============ */
+
+  .closing-section { padding: 24px 0 0; max-width: 620px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .closing-section .eyebrow { }
+  .closing-section h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.2; }
+  .closing-section p { font-size: 16.5px; line-height: 1.6; color: var(--ink-70); margin: 0; }
+  .closing-cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+
+  /* ============ Chapter 2: designs — a full-screen panel the page snaps to ============ */
+  #designs { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; }
+  #designs > .wrap { width: 100%; }
+  .js #designs .shelf { opacity: 0; transform: translateY(56px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .js #designs.in-view .shelf { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .js #designs .shelf { opacity: 1; transform: none; transition: none; } }
+
+  .shelf-hint { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--water-dark); margin: 8px 0 0; }
+
+  /* ---------- One row of books on a plain background ---------- */
+  .shelf { padding: 30px 0 0; margin-bottom: 8px; }
+  .row {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 350px;
+    padding: 0 2px;
+    border-bottom: 1.5px solid rgba(31, 59, 40,0.3);
+  }
+
+  /* Every book: --w width, --h height, --bg / --fg colours, --num folio colour, --rot lean */
+  .b {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: var(--h);
+    background-color: var(--bg);
+    color: var(--fg);
+    border-radius: 2px 2px 0 0;
+    box-shadow: inset -4px 0 6px rgba(0,0,0,0.12), inset 2px 0 2px rgba(255,255,255,0.18);
+    transform-origin: bottom right;
+    transform: rotate(var(--rot, 0deg));
+  }
+  .b::before, .b::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; background: currentColor; opacity: 0.28; }
+  .b::before { top: 9px; }
+  .b::after { bottom: 10px; }
+  .b.lean { margin-right: calc(var(--h) * 0.13); }
+
+  /* Decorations printed on the spine */
+  .d-band   { background-image: linear-gradient(transparent 0 42%, rgba(255,255,255,0.22) 42% 50%, transparent 50%); }
+  .d-stripe { background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.24) 0 5px, transparent 5px 10px); background-size: 100% 52px; background-position: bottom 22px left 0; background-repeat: no-repeat; }
+  .d-dot    { background-image: radial-gradient(circle at 50% calc(100% - 34px), rgba(255,255,255,0.4) 0 8px, transparent 9px); }
+
+  /* Decorative filler books squeeze thin on small screens so real books always fit */
+  .f { flex: 1 1 var(--w); min-width: 3px; max-width: calc(var(--w) * 1.8); filter: saturate(0.9); }
+
+  /* Clickable spines */
+  .spine {
+    flex: 0 1 var(--w);
+    min-width: 30px;
+    border: 0;
+    padding: 20px 0 18px;
+    gap: 10px;
+    cursor: pointer;
+    font: inherit;
+    appearance: none;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .spine:hover, .spine:focus-visible, .spine.is-open {
+    transform: rotate(var(--rot, 0deg)) translateY(-16px);
+    box-shadow: inset -4px 0 6px rgba(0,0,0,0.12), inset 2px 0 2px rgba(255,255,255,0.18), 0 14px 18px -6px rgba(31, 59, 40,0.35);
+  }
+  .spine:focus-visible, .cover:focus-visible { outline: 3px solid var(--water); outline-offset: 3px; }
+  .spine-num { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 13px; color: var(--num); line-height: 1; }
+  .spine-title {
+    writing-mode: vertical-rl;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(var(--h) - 62px);
+  }
+  /* A few different lettering styles so the row feels like a real collection */
+  .t-up .spine-title     { transform: rotate(180deg); }
+  .t-caps .spine-title   { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; }
+  .t-sans .spine-title   { font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .t-italic .spine-title { font-style: italic; font-weight: 500; font-size: 16px; }
+
+  /* The face-out book in the middle */
+  .cover {
+    flex: 0 0 214px;
+    height: 296px;
+    background: var(--water-dark);
+    color: var(--card);
+    border: 0;
+    border-radius: 3px 3px 0 0;
+    padding: 24px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    font: inherit;
+    appearance: none;
+    box-shadow: inset -6px 0 8px rgba(0,0,0,0.16), inset 3px 0 3px rgba(255,255,255,0.14), 0 2px 0 rgba(31, 59, 40,0.1);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+  }
+  .cover::before { content: ''; position: absolute; inset: 9px; border: 1px solid rgba(244,242,225,0.38); pointer-events: none; }
+  .cover:hover, .cover:focus-visible, .cover.is-open { transform: translateY(-14px); box-shadow: inset -6px 0 8px rgba(0,0,0,0.16), inset 3px 0 3px rgba(255,255,255,0.14), 0 16px 20px -6px rgba(31, 59, 40,0.4); }
+  .cover-num { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 13px; color: #EBE5BA; line-height: 1; }
+  .cover-art { width: 100%; aspect-ratio: 1; background: var(--card); border-radius: 2px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; font-size: 12px; font-style: italic; color: var(--ink-70); border: 1.5px dashed rgba(31, 59, 40,0.25); }
+  .cover-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; line-height: 1.2; text-align: center; }
+
+  /* ---------- Pop-up ---------- */
+  .modal { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 3vh 3vw; }
+  .modal[hidden] { display: none; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(31, 59, 40, 0.72); backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.25s ease; }
+  .modal-panel {
+    position: relative;
+    width: min(1060px, 100%);
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    outline: none;
+  }
+  .modal.open .modal-backdrop { opacity: 1; }
+  .modal.open .modal-panel { opacity: 1; transform: none; }
+  .modal-scroll { max-height: 90vh; overflow-y: auto; padding: 44px; border-radius: var(--radius-lg); }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid rgba(31, 59, 40,0.2); background: var(--card); color: var(--ink);
+    font-size: 22px; line-height: 1; cursor: pointer;
+    transition: border-color .18s ease, color .18s ease;
+  }
+  .modal-close:hover { border-color: var(--ink); color: var(--water-dark); }
+  .modal-close:focus-visible { outline: 3px solid var(--water); outline-offset: 2px; }
+
+  .modal-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 44px; align-items: start; }
+  .modal-text { position: sticky; top: 0; display: flex; flex-direction: column; gap: 14px; }
+  .modal-text h3 { font-size: 28px; line-height: 1.15; }
+  .modal-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .modal-body p { font-size: 15px; line-height: 1.65; color: var(--ink-70); margin: 0 0 12px 0; }
+  .modal-visuals { display: flex; flex-direction: column; gap: 18px; }
+  .shot { width: 100%; aspect-ratio: 16 / 10; border-radius: 12px; }
+  img.shot { object-fit: cover; box-shadow: 0 1px 3px rgba(31, 59, 40,0.08), 0 12px 28px rgba(31, 59, 40,0.1); }
+
+  @media (max-width: 900px) {
+    .modal-scroll { padding: 28px 22px 32px; }
+    .modal-grid { grid-template-columns: 1fr; gap: 24px; }
+    .modal-text { position: static; padding-right: 36px; }
+    .modal-text h3 { font-size: 24px; }
+  }
+  @media (max-width: 560px) {
+    .row { height: 330px; gap: 2px; padding: 0; }
+    .f:not(.f-edge) { display: none; }
+    .b.lean { --rot: 0deg !important; margin-right: 0; }
+    .spine { min-width: 30px; padding-top: 16px; }
+    .spine-title { font-size: 12px; }
+    .t-sans .spine-title, .t-italic .spine-title { font-size: 13px; }
+    .t-caps .spine-title { font-size: 10px; letter-spacing: 0.12em; }
+    .cover { flex-basis: 104px; height: 250px; padding: 18px 10px 14px; gap: 10px; }
+    .cover::before { inset: 6px; }
+    .cover-art { font-size: 10px; padding: 4px; }
+    .cover-title { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spine, .modal-backdrop, .modal-panel { transition: none; }
+  }
+
+  @media (min-width: 901px) { .site-nav { padding-right: calc(40px + var(--sbw, 0px)); } }
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="wordmark"><a href="index.html">Jen.</a></div>
+<nav class="site-nav" id="nav">
+  <div class="wordmark"><a href="#cover">Jen.</a></div>
   <div class="nav-links">
-    <a class="nav-link" href="designs_shelf_preview.html">Designs</a>
-    <a class="nav-link" href="automations.html">Automations</a>
-    <a class="nav-link" href="web-dev.html">Web / Dev</a>
-    <a class="nav-link" href="resume.html">Résumé</a>
+    <a class="nav-link" href="#designs" data-sec="designs">Designs</a>
+    <a class="nav-link" href="#automations" data-sec="automations">Automations</a>
+    <a class="nav-link" href="#web-dev" data-sec="web-dev">Web / Dev</a>
+    <a class="nav-link" href="#resume" data-sec="resume">Résumé</a>
     <a class="pill-link" href="mailto:jnajera2@gmail.com">Contact</a>
   </div>
 </nav>
 
-<main class="wrap">
+<header class="site-cover" id="cover">
+<div class="wrap">
 
   <section class="hero">
     <div class="hero-greeting">Hi, I'm Jen — nice to meet you.</div>
@@ -58,11 +334,18 @@
     <h1>From problem to shipped solution.</h1>
     <p class="lede">I figure out how a business actually runs, automate the parts that shouldn't be manual anymore, and design + build the pages, campaigns, and interfaces that carry it to customers.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="automations.html">View Case Studies</a>
-      <a class="btn btn-secondary" href="resume.html#download">Download Résumé</a>
+      <a class="btn btn-primary" href="#automations">View Case Studies</a>
+      <a class="btn btn-secondary" href="resume.pdf" download>Download Résumé</a>
     </div>
   </section>
 
+</div>
+</header>
+
+<main>
+
+<section id="beyond">
+<div class="wrap">
   <section class="facets-section">
     <div class="eyebrow">Beyond The Work</div>
     <h3>Hover a tile to get to know me a little more.</h3>
@@ -113,20 +396,507 @@
 
     </div>
   </section>
+</div>
+</section>
 
-  <nav class="chapter-nav" aria-label="Page navigation">
-    <a class="chapter-link next" href="dedication.html">
-      <span class="chapter-meta">
-        <span class="chapter-label">Next</span>
-        <span class="chapter-title">Dedication</span>
-      </span>
-      <span class="arrow">↓</span>
+<section class="chapter" id="dedication">
+<div class="wrap">
+  <header class="dedication-header">
+    <div class="eyebrow">Dedication</div>
+    <h2>For the systems, the pixels, and everything in between.</h2>
+    <p>A quick look at the toolkit before we get into it — everything on the next few pages is built with some combination of these.</p>
+  </header>
+
+  <section class="bring-section">
+    <div class="bring-grid">
+      <div class="bring-col">
+        <div class="cluster-title">Systems &amp; Process</div>
+        <div class="tags"><span class="tag">Make.com</span><span class="tag">Shopify Flow</span><span class="tag">Monday.com</span></div>
+      </div>
+      <div class="bring-col">
+        <div class="cluster-title">Web &amp; App Dev</div>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Liquid</span><span class="tag">SQL</span><span class="tag">GitHub / Vercel</span></div>
+      </div>
+      <div class="bring-col">
+        <div class="cluster-title">QA &amp; Troubleshooting</div>
+        <div class="tags"><span class="tag">Debugging</span><span class="tag">Web Scraping</span></div>
+      </div>
+      <div class="bring-col">
+        <div class="cluster-title">Design &amp; Marketing</div>
+        <div class="tags"><span class="tag">Adobe CC</span><span class="tag">SEO</span><span class="tag">Google Ads</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+</section>
+
+<section class="chapter" id="automations">
+<div class="wrap">
+  <header class="page-header">
+    <div class="eyebrow">Chapter 01 · Automations &amp; Systems</div>
+    <h2>Where I map a messy process and build the system that runs it.</h2>
+    <p>The unglamorous stuff — the spreadsheet nobody trusts, the update that's always a day late. I like turning "someone does this by hand every week" into "this just happens now."</p>
+  </header>
+
+  <section class="flagship">
+    <span class="num num-tag">Case&nbsp;01&nbsp;/&nbsp;04</span>
+    <div class="flagship-left">
+      <div>
+        <h3 style="font-size: 24px;">Shopify → Monday.com Order Sync</h3>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+          <span class="tag tag-water">Make.com</span><span class="tag tag-water">Webhooks</span><span class="tag tag-water">Shopify Flow</span>
+        </div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-box">Shopify</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Make.com</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Monday.com</div>
+      </div>
+    </div>
+    <div class="flagship-right">
+      <div>
+        <div class="beat-label">Problem</div>
+        <p class="beat-body">Order data was scattered across Shopify, vendor confirmation emails, and a manually updated board — updates lagged and errors crept in.</p>
+      </div>
+      <div>
+        <div class="beat-label">Approach</div>
+        <p class="beat-body">Built a Make.com pipeline triggered by vendor emails and Shopify order events, parsing data and syncing status to Monday.com in real time.</p>
+      </div>
+      <div>
+        <div class="beat-label">Outcome</div>
+        <p class="beat-body">Eliminated manual entry, removed sync lag, and gave the team one reliable source of truth for order status.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">More Automations</div>
+    <div class="more-grid">
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">02 / 04</div>
+        <div class="card-title">Hardware Auto-Fulfillment Logic</div>
+        <p class="card-body">Shopify Flow that determines matching hardware and accessories per order based on product size and configuration.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">03 / 04</div>
+        <div class="card-title">Exhibitor Directory Scraper</div>
+        <p class="card-body">Diagnosed a client-rendered data issue and rebuilt the scrape path end to end to recover missing fields.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">04 / 04</div>
+        <div class="card-title">Graphic Proofing Automation</div>
+        <p class="card-body">Streamlined the proofing workflow from customer request through internal approval.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</section>
+
+<section class="chapter" id="designs">
+<div class="wrap">
+  <header class="page-header">
+    <div class="eyebrow">Chapter 02 · Designs &amp; Campaigns</div>
+    <h2>Full campaign systems — banner, landing page, and email, designed as one.</h2>
+    <p>A sale doesn't get one design and call it done — the banner, the page, and the email all have to feel like the same idea.</p>
+  </header>
+
+  <p class="shelf-hint">Pick a book to open it.</p>
+
+  <section class="shelf" aria-label="Design projects, shown as a row of books">
+    <div class="row" id="row">
+      <noscript><p>Turn on JavaScript to browse the shelf.</p></noscript>
+    </div>
+  </section>
+</div>
+</section>
+
+<section class="chapter" id="web-dev">
+<div class="wrap">
+  <header class="page-header">
+    <div class="eyebrow">Chapter 03 · Web / App Dev &amp; Coding</div>
+    <h2>Where the code actually lives.</h2>
+    <p>Not just picking colors — going into the theme files and templates and making the site actually work the way it needs to.</p>
+  </header>
+
+  <section class="flagship">
+    <span class="num num-tag">Build&nbsp;01&nbsp;/&nbsp;04</span>
+    <div class="flagship-left">
+      <div>
+        <h3 style="font-size: 24px;">Shopify Theme Customization</h3>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+          <span class="tag tag-water">Liquid</span><span class="tag tag-water">CSS</span><span class="tag tag-water">JavaScript</span>
+        </div>
+      </div>
+      <div class="placeholder" style="height: 130px;">[ Before / after theme screenshot ]</div>
+    </div>
+    <div class="flagship-right">
+      <div>
+        <div class="beat-label">Problem</div>
+        <p class="beat-body">A purchased theme looked fine out of the box, but didn't match the brand direction or how the team actually needed to work.</p>
+      </div>
+      <div>
+        <div class="beat-label">Approach</div>
+        <p class="beat-body">Went into the theme code directly — Liquid, CSS, and JS — to adjust layout, styling, and functionality against specific requests, not just settings-panel tweaks.</p>
+      </div>
+      <div>
+        <div class="beat-label">Outcome</div>
+        <p class="beat-body">A site that looks custom without a custom price tag, and one I can keep adjusting myself instead of waiting on a developer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">More Builds</div>
+    <div class="more-grid">
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">02 / 04</div>
+        <div class="card-title">Hosted Project</div>
+        <p class="card-body">Built and deployed with Vercel, version-controlled through GitHub from first commit to live site.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">03 / 04</div>
+        <div class="card-title">Custom Theme Sections</div>
+        <p class="card-body">Reusable Liquid sections and snippets that give the team flexible, drag-and-drop page building without touching code.</p>
+      </div>
+      <div class="card">
+        <div class="num" style="display:block; margin-bottom:10px; font-size:13px;">04 / 04</div>
+        <div class="card-title">Data Queries &amp; Cleanup</div>
+        <p class="card-body">SQL used to audit and clean up product data at scale — the unglamorous work that keeps everything else accurate.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="cluster-title">Languages &amp; Tools</div>
+    <div class="tools-row">
+      <span class="tag-code tag">JavaScript</span><span class="tag-code tag">HTML / CSS</span><span class="tag-code tag">Liquid</span><span class="tag-code tag">PHP</span><span class="tag-code tag">Python</span><span class="tag-code tag">Java</span><span class="tag-code tag">C / C++</span><span class="tag-code tag">SQL</span><span class="tag-code tag">GitHub</span><span class="tag-code tag">Vercel</span>
+    </div>
+  </section>
+</div>
+</section>
+
+<section class="chapter" id="resume">
+<div class="wrap">
+  <header class="resume-header" id="download">
+    <div class="copy">
+      <div class="eyebrow">Chapter 04 · Résumé</div>
+      <h2>Experience &amp; Education</h2>
+      <p>The full timeline, if you'd rather read it that way — or grab the PDF and take it with you.</p>
+    </div>
+    <a class="btn btn-primary" href="resume.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+        <path d="M12 3v12"/>
+        <path d="M7 10l5 5 5-5"/>
+        <path d="M4 19h16"/>
+      </svg>
+      Download Résumé (PDF)
     </a>
-  </nav>
+  </header>
+
+  <section class="exp-edu-row">
+    <div class="exp-col">
+      <div class="cluster-title">Experience</div>
+      <div class="role-card">
+        <div class="role-head">
+          <div class="title">Technical Business Development · Joy Displays</div>
+          <div class="dates">March 2024 – Present</div>
+        </div>
+        <div class="role-lines">
+          <div class="role-line">Leads Shopify theme development and front-end customization</div>
+          <div class="role-line">Builds automations connecting Shopify, Monday.com, and email workflows</div>
+          <div class="role-line">Owns marketing design, campaigns, and SEO</div>
+          <div class="role-line">Manages product data and operational processes</div>
+        </div>
+      </div>
+      <div class="role-card">
+        <div class="role-head">
+          <div class="title">Receptionist · Frank Kent Cadillac</div>
+          <div class="dates">November 2022 – March 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-col">
+      <div class="cluster-title">Education</div>
+      <div class="edu-card">
+        <div class="title">Bachelor of Science, Software Engineering</div>
+        <div class="meta">The University of Texas at Arlington · December 2018</div>
+      </div>
+      <div class="edu-card">
+        <div class="title">Bachelor of Liberal Arts, English Studies</div>
+        <div class="meta">The University of Texas at Arlington · December 2018</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills-section">
+    <div class="eyebrow">Skills &amp; Tools — In Full</div>
+    <div class="skills-grid">
+      <div class="skills-col">
+        <div class="cluster-title">Systems &amp; Process</div>
+        <div class="tags"><span class="tag">Make.com</span><span class="tag">Shopify Flow</span><span class="tag">Monday.com</span><span class="tag">Webhooks</span><span class="tag">Web Scraping</span><span class="tag">Debugging</span></div>
+      </div>
+      <div class="skills-col">
+        <div class="cluster-title">Web &amp; App Dev</div>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML / CSS</span><span class="tag">Liquid</span><span class="tag">PHP</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">C / C++</span><span class="tag">SQL</span><span class="tag">GitHub</span><span class="tag">Vercel</span></div>
+      </div>
+      <div class="skills-col">
+        <div class="cluster-title">Design &amp; Marketing</div>
+        <div class="tags"><span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">InDesign</span><span class="tag">Premiere Pro</span><span class="tag">After Effects</span><span class="tag">Lightroom</span><span class="tag">SEO</span><span class="tag">Google Ads</span><span class="tag">Ahrefs</span><span class="tag">Cold Email</span></div>
+      </div>
+      <div class="skills-col">
+        <div class="cluster-title">Content &amp; Social</div>
+        <div class="tags"><span class="tag">Video Editing</span><span class="tag">Filming</span><span class="tag">Social Media Mgmt</span><span class="tag">Photography</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+</section>
+
+<section class="chapter" id="closing">
+<div class="wrap">
+  <section class="closing-section">
+    <div class="eyebrow">The Back Cover</div>
+    <h2>Thanks for reading all the way to the end.</h2>
+    <p>If any of this is useful to you — the work, the way I think about it, or just where it might fit — I'd genuinely love to talk.</p>
+    <div class="closing-cta-row">
+      <a class="btn btn-primary" href="mailto:jnajera2@gmail.com">Get In Touch</a>
+      <a class="btn btn-secondary" href="resume.pdf" download>Download Résumé</a>
+    </div>
+    <a class="back-top" href="#cover">Back to the cover ↑</a>
+  </section>
+</div>
+</section>
 
 </main>
 
 <footer class="site-footer">© <span id="year"></span> Jen. Built by hand, deployed on Vercel.</footer>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<!-- Pop-up (filled in by the script below) -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <button class="modal-close" type="button" data-close aria-label="Close">×</button>
+    <div class="modal-scroll">
+      <div class="modal-grid">
+        <div class="modal-text">
+          <span class="num" id="modal-num"></span>
+          <h3 id="modal-title"></h3>
+          <div class="modal-tags" id="modal-tags"></div>
+          <div class="modal-body" id="modal-body"></div>
+        </div>
+        <div class="modal-visuals" id="modal-visuals"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Pinned nav: frosted once you leave the cover; highlights the chapter you're in */
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 24); }
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  var links = {};
+  document.querySelectorAll('.nav-link[data-sec]').forEach(function (a) { links[a.dataset.sec] = a; });
+  if (!('IntersectionObserver' in window)) return;
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) current = e.target.id;
+      else if (current === e.target.id) current = null;
+    });
+    Object.keys(links).forEach(function (k) { links[k].classList.toggle('active', k === current); });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  Object.keys(links).forEach(function (k) { var s = document.getElementById(k); if (s) io.observe(s); });
+
+  /* the Designs panel slides its row of books up as it arrives */
+  var panel = document.getElementById('designs');
+  var rev = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { panel.classList.add('in-view'); rev.disconnect(); } });
+  }, { threshold: 0.3 });
+  rev.observe(panel);
+})();
+</script>
+
+<script>
+
+
+/* ==========================================================================
+   YOUR DESIGNS — edit this list.
+   - title / tags / body: what shows on the left of the pop-up
+   - visuals: what shows on the right. A plain string is a placeholder box;
+     swap it for { src: 'images/designs/summer-hero.jpg', alt: 'Describe it' }
+     once you have the real image.
+   - book (spines): w = width, h = height in px, bg = colour, t = lettering style
+     ('caps' | 'sans' | 'italic' | 'up' | none), d = print on the spine
+     ('band' | 'stripe' | 'dot' | none), lean = tilts against its neighbour.
+   - The FIRST design is the face-out book in the middle of the row.
+   ========================================================================== */
+const PLACEHOLDER_BODY = [
+  '[ Write about this one — what the sale or campaign was, what you made for it, and how it went. ]',
+  '[ Anything worth adding: the goal, the timeline, the numbers, what you would do differently. ]'
+];
+const LIGHT = { fg: '#1F3B28', num: '#2D6438' };
+const DARK  = { fg: '#F4F2E2', num: '#EBE5BA' };
+
+const designs = [
+  { title: 'Summer Sale Campaign', tags: ['Photoshop', 'Illustrator', 'Email Design'], body: PLACEHOLDER_BODY,
+    cover: 'Hero banner',
+    visuals: ['Hero banner screenshot', 'Landing page screenshot', 'Matching email screenshot'] },
+  { title: 'Giveaway Campaign', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Giveaway banner screenshot', 'Giveaway page screenshot'],
+    book: { w: 54, h: 268, bg: '#E7D64B', t: 'caps', d: 'band', ...LIGHT } },
+  { title: 'Abandoned Cart Series', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Email 1 screenshot', 'Email 2 screenshot', 'Email 3 screenshot'],
+    book: { w: 60, h: 304, bg: '#2D6438', t: 'italic', d: 'stripe', ...DARK } },
+  { title: 'Instagram Reel Edit', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Reel thumbnail or still'],
+    book: { w: 50, h: 250, bg: '#1F3B28', t: 'sans', d: 'dot', ...DARK } },
+  { title: 'Product Launch Banner', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Launch banner screenshot', 'In-site placement screenshot'],
+    book: { w: 62, h: 286, bg: '#AED6CC', t: 'up', ...LIGHT, num: '#1F3B28' } },
+  { title: 'Holiday Sale Page', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Holiday page screenshot', 'Matching email screenshot'],
+    book: { w: 56, h: 262, bg: '#7EB66D', t: 'caps', d: 'band', lean: true, ...LIGHT, num: '#1F3B28' } },
+  { title: 'Brand Photography', tags: [], body: PLACEHOLDER_BODY,
+    visuals: ['Photo 1', 'Photo 2', 'Photo 3'],
+    book: { w: 58, h: 278, bg: '#EBE5BA', t: 'italic', ...LIGHT } }
+];
+
+/* The row, left to right. A number is a book from the list above (0 = the face-out one).
+   'f3' = three decorative filler books; 'f2l' = two, the last one leaning. */
+const layout = ['f3', 1, 'f2', 2, 'f2l', 3, 0, 'f2', 4, 5, 'f2', 6, 'f3'];
+
+/* ---------- Build the shelf ---------- */
+const FILLERS = [
+  ['#AED6CC', '#1F3B28'], ['#EBE5BA', '#1F3B28'], ['#4C975E', '#F4F2E2'], ['#C9DD8C', '#1F3B28'],
+  ['#278B9E', '#F4F2E2'], ['#2D6438', '#F4F2E2'], ['#6FB8B5', '#1F3B28'], ['#D3E8DE', '#1F3B28'],
+  ['#7EB66D', '#1F3B28'], ['#1B6C7C', '#F4F2E2']
+];
+const DECOS = ['', 'd-band', '', 'd-stripe', '', 'd-dot', ''];
+let seed = 11;
+function rand() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+
+function makeFiller(prevIdx, lean, edge) {
+  let i; do { i = Math.floor(rand() * FILLERS.length); } while (i === prevIdx);
+  const el = document.createElement('i');
+  const deco = DECOS[Math.floor(rand() * DECOS.length)];
+  el.className = ['b', 'f', deco, lean ? 'lean' : '', edge ? 'f-edge' : ''].filter(Boolean).join(' ');
+  el.setAttribute('aria-hidden', 'true');
+  el.style.cssText = `--w:${22 + Math.floor(rand() * 24)}px;--h:${150 + Math.floor(rand() * 120)}px;--bg:${FILLERS[i][0]};--fg:${FILLERS[i][1]}` + (lean ? ';--rot:7deg' : '');
+  return [el, i];
+}
+
+const row = document.getElementById('row');
+const spineEls = [];
+let prev = -1;
+layout.forEach((tok, pos) => {
+  if (typeof tok === 'string') {
+    const count = Number(tok[1]);
+    const lastLeans = tok.endsWith('l');
+    for (let n = 0; n < count; n++) {
+      const edge = (pos === 0 && n === 0) || (pos === layout.length - 1 && n === count - 1);
+      const [el, i] = makeFiller(prev, lastLeans && n === count - 1, edge);
+      prev = i; row.appendChild(el);
+    }
+    return;
+  }
+  prev = -1;
+  const d = designs[tok];
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('aria-haspopup', 'dialog');
+  b.setAttribute('aria-label', `Open design ${tok + 1} of ${designs.length}: ${d.title}`);
+  if (tok === 0) {
+    b.className = 'cover';
+    b.innerHTML = '<span class="cover-num"></span><span class="cover-art"></span><span class="cover-title"></span>';
+    b.querySelector('.cover-num').textContent = '01';
+    b.querySelector('.cover-art').textContent = `[ ${d.cover} ]`;
+    b.querySelector('.cover-title').textContent = d.title;
+  } else {
+    const k = d.book;
+    b.className = ['b', 'spine', k.t ? 't-' + k.t : '', k.d ? 'd-' + k.d : '', k.lean ? 'lean' : ''].filter(Boolean).join(' ');
+    b.style.cssText = `--w:${k.w}px;--h:${k.h}px;--bg:${k.bg};--fg:${k.fg};--num:${k.num}` + (k.lean ? ';--rot:7deg' : '');
+    b.innerHTML = '<span class="spine-num"></span><span class="spine-title"></span>';
+    b.querySelector('.spine-num').textContent = String(tok + 1).padStart(2, '0');
+    b.querySelector('.spine-title').textContent = d.title;
+  }
+  b.addEventListener('click', () => openBook(tok, b));
+  spineEls[tok] = b;
+  row.appendChild(b);
+});
+
+/* ---------- Pop-up behaviour ---------- */
+const modal = document.getElementById('modal');
+const panel = modal.querySelector('.modal-panel');
+const scroller = modal.querySelector('.modal-scroll');
+const behind = [document.querySelector('.site-nav'), document.querySelector('.site-cover'), document.querySelector('main'), document.querySelector('.site-footer')];
+let lastSpine = null;
+let closeTimer = null;
+const tints = ['rgba(39,139,158,0.10)', 'rgba(76,151,94,0.10)', 'rgba(231,214,75,0.18)'];
+
+function openBook(i, spine) {
+  const d = designs[i];
+  clearTimeout(closeTimer);
+  lastSpine = spine;
+  spine.classList.add('is-open');
+
+  document.getElementById('modal-num').textContent = `Design ${String(i + 1).padStart(2, '0')} / ${String(designs.length).padStart(2, '0')}`;
+  document.getElementById('modal-title').textContent = d.title;
+
+  const tagBox = document.getElementById('modal-tags');
+  tagBox.replaceChildren(...d.tags.map(t => { const s = document.createElement('span'); s.className = 'tag tag-coral'; s.textContent = t; return s; }));
+  tagBox.hidden = d.tags.length === 0;
+
+  document.getElementById('modal-body').replaceChildren(...d.body.map(t => { const p = document.createElement('p'); p.textContent = t; return p; }));
+
+  document.getElementById('modal-visuals').replaceChildren(...d.visuals.map((v, n) => {
+    if (typeof v === 'string') {
+      const box = document.createElement('div');
+      box.className = 'placeholder shot';
+      box.style.background = tints[n % tints.length];
+      box.textContent = `[ ${v} ]`;
+      return box;
+    }
+    const img = document.createElement('img');
+    img.className = 'shot';
+    img.src = v.src; img.alt = v.alt || '';
+    return img;
+  }));
+
+  scroller.scrollTop = 0;
+  const sb = window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.overflow = 'hidden';
+  if (sb > 0) { document.body.style.paddingRight = sb + 'px'; document.documentElement.style.setProperty('--sbw', sb + 'px'); }
+  behind.forEach(el => el && el.setAttribute('inert', ''));
+  modal.hidden = false;
+  requestAnimationFrame(() => { modal.classList.add('open'); panel.focus({ preventScroll: true }); });
+}
+
+function closeBook() {
+  if (modal.hidden) return;
+  modal.classList.remove('open');
+  if (lastSpine) lastSpine.classList.remove('is-open');
+  closeTimer = setTimeout(() => {
+    modal.hidden = true;
+    document.documentElement.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.documentElement.style.removeProperty('--sbw');
+    behind.forEach(el => el && el.removeAttribute('inert'));
+    if (lastSpine) lastSpine.focus({ preventScroll: true });
+  }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 250);
+}
+
+modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeBook(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBook(); });
+
+</script>
 </body>
 </html>
