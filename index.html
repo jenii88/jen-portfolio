@@ -365,6 +365,16 @@
     .cover-art { font-size: 10px; padding: 4px; }
     .cover-title { font-size: 12px; }
   }
+  /* Very narrow phones: the books need about 306px, so slim them down until the whole shelf fits the screen */
+  @media (max-width: 359px) {
+    .cover { flex-basis: 92px; padding-left: 8px; padding-right: 8px; }
+    .spine { min-width: 24px; }
+  }
+  @media (max-width: 319px) {
+    .cover { flex-basis: 80px; }
+    .cover-title { font-size: 11px; }
+    .spine { min-width: 20px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .spine, .modal-backdrop, .modal-panel { transition: none; }
   }
