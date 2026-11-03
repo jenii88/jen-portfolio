@@ -281,6 +281,62 @@
   .modal-visuals { display: flex; flex-direction: column; gap: 18px; }
   .shot { width: 100%; aspect-ratio: 16 / 10; border-radius: 12px; }
   img.shot { object-fit: cover; box-shadow: 0 1px 3px rgba(31, 59, 40,0.08), 0 12px 28px rgba(31, 59, 40,0.1); }
+  /* a single piece of artwork shown at its own proportions (hero backgrounds are wide, so no cropping) */
+  .art { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .art img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 1px 3px rgba(31, 59, 40,0.08), 0 12px 28px rgba(31, 59, 40,0.1); }
+  .art .art-ph { aspect-ratio: 3 / 1; border-radius: 12px; display: grid; place-items: center; background: rgba(39, 139, 158, 0.10); }
+  .art figcaption { font-size: 12.5px; color: var(--ink-70); text-align: center; }
+
+  .modal-facts { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13.5px; font-weight: 500; color: var(--ink-70); }
+  .modal-facts[hidden] { display: none; }
+  .modal-facts span + span::before { content: '·'; margin-right: 14px; color: var(--ink-32); }
+
+  /* ---- Series pop-up: filter chips -> grid of campaigns -> one campaign's pieces ---- */
+  .gal-hint { margin: 0; font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; color: var(--water-dark); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: inherit; font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--ink-12); background: transparent; color: var(--ink); cursor: pointer; transition: border-color .18s ease, background .18s ease, color .18s ease; }
+  .chip:hover { border-color: var(--water); }
+  .chip.on { background: var(--water-dark); border-color: var(--water-dark); color: #fff; }
+  .chip:focus-visible, .gcard:focus-visible, .dback:focus-visible, .dnav button:focus-visible, .frame-vp:focus-visible { outline: 3px solid var(--water); outline-offset: 3px; }
+  .gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 14px; }
+  .gcard { font: inherit; text-align: left; background: none; border: 0; padding: 0; cursor: pointer; display: flex; flex-direction: column; gap: 5px; color: var(--ink); }
+  .gthumb { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; box-shadow: 0 1px 3px rgba(31, 59, 40, 0.1); transition: transform .2s ease, box-shadow .2s ease; }
+  .gthumb.ph { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-70); }
+  .gcard:hover .gthumb, .gcard:focus-visible .gthumb { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(31, 59, 40, 0.16); }
+  .gcard-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; line-height: 1.25; }
+  .gcard-date { font-size: 12.5px; color: var(--ink-70); }
+
+  .dbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .dback { font: inherit; font-size: 14px; font-weight: 500; color: var(--water-dark); background: none; border: 0; padding: 4px 0; cursor: pointer; }
+  .dback:hover { text-decoration: underline; }
+  .dnav { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-70); }
+  .dnav button { font: inherit; font-size: 15px; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--ink-12); background: transparent; color: var(--ink); cursor: pointer; }
+  .dnav button:hover:not(:disabled) { border-color: var(--ink); }
+  .dnav button:disabled { opacity: 0.35; cursor: default; }
+  @media (min-width: 901px) { .dbar, .dhead.solo { margin-top: 32px; } }
+  .dhead h4 { font-family: 'Fraunces', serif; font-size: 22px; line-height: 1.2; margin: 0; }
+  .dhead p { margin: 4px 0 0; font-size: 13.5px; color: var(--ink-70); }
+  .frame { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .frame-bar { display: flex; gap: 6px; padding: 10px 12px; background: rgba(31, 59, 40, 0.07); border: 1px solid var(--ink-12); border-bottom: 0; border-radius: 12px 12px 0 0; }
+  .frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(31, 59, 40, 0.25); }
+  .frame-vp { height: 360px; overflow-y: auto; background: #fff; border: 1px solid var(--ink-12); border-radius: 0 0 12px 12px; scrollbar-width: thin; }
+  .frame .tall { display: block; width: 100%; height: auto; }
+  .tall-wrap { position: relative; line-height: 0; }
+  .tall-wrap .ov { position: absolute; display: block; height: auto; pointer-events: none; }
+  .email-set { display: flex; flex-direction: column; gap: 12px; }
+  .email-set .chips { justify-content: center; }
+  .frame .tall-ph { height: 1500px; padding: 18px; font-size: 13px; font-style: italic; color: var(--ink-70); background: linear-gradient(180deg, rgba(39,139,158,0.10) 0 24%, rgba(231,214,75,0.18) 24% 48%, rgba(76,151,94,0.10) 48% 74%, rgba(39,139,158,0.10) 74% 100%); }
+  .frame figcaption { font-size: 12.5px; color: var(--ink-70); text-align: center; }
+  .frame.email { width: 100%; max-width: 380px; align-self: center; }
+  .frame.email .frame-vp { height: 480px; }
+  .frame.email .tall-ph { height: 1800px; }
+  @media (max-width: 560px) {
+    .modal-facts { flex-direction: column; }
+    .modal-facts span + span::before { content: none; }
+    .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .frame-vp { height: 300px; }
+    .frame.email .frame-vp { height: 380px; }
+  }
 
   @media (max-width: 900px) {
     .modal-scroll { padding: 28px 22px 32px; }
@@ -685,6 +741,7 @@
           <span class="num" id="modal-num"></span>
           <h3 id="modal-title"></h3>
           <div class="modal-tags" id="modal-tags"></div>
+          <div class="modal-facts" id="modal-facts" hidden></div>
           <div class="modal-body" id="modal-body"></div>
         </div>
         <div class="modal-visuals" id="modal-visuals"></div>
@@ -739,35 +796,177 @@ document.getElementById('year').textContent = new Date().getFullYear();
      ('band' | 'stripe' | 'dot' | none), lean = tilts against its neighbour.
    - The FIRST design is the face-out book in the middle of the row.
    ========================================================================== */
-const PLACEHOLDER_BODY = [
-  '[ Write about this one — what the sale or campaign was, what you made for it, and how it went. ]',
-  '[ Anything worth adding: the goal, the timeline, the numbers, what you would do differently. ]'
+const PROMO_BODY = [
+  '[ What this promotion was and what you made for it — the email (design and copy), the page, and the hero image. ]',
+  '[ Anything worth adding: the goal, the numbers, and what you changed from one year to the next. ]'
+];
+const GIVEAWAY_BODY = [
+  '[ What the giveaways were for — the goal, who they were aimed at, and the kind of prize. ]',
+  '[ The system: the same hero, page and email built for every one, and what you changed each time. ]',
+  '[ Results worth mentioning: sign-ups, list growth, traffic. ]',
+  '[ One line is enough for the blog posts: each giveaway also had its own post, written to go with the page. ]'
 ];
 const LIGHT = { fg: '#1F3B28', num: '#2D6438' };
 const DARK  = { fg: '#F4F2E2', num: '#EBE5BA' };
 
+/* Giveaways: one entry per giveaway, oldest first. Each has:
+     title, date, year   - the year makes the 2024 / 2025 / 2026 filter chips work
+     hero:   'images/designs/giveaways/fall-2024-hero.jpg'   the hero background (null = placeholder)
+     page:   'images/designs/giveaways/fall-2024-page.jpg'   ONE tall full-page screenshot (null = placeholder)
+     thumb:  the small picture on the grid card until a hero is added
+     emails: one entry per email. With 2+ the pop-up shows tabs (Launch / Reminder / Winner).
+             overlays: GIFs that play in place on top of the screenshot (x, y, w are % of the screenshot). */
+const GIVEAWAYS = [
+  { title: 'Fall Giveaway', date: '2024', year: 2024,
+    thumb: 'images/designs/giveaways/fall-2024-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/fall-2024-launch.jpg', overlays: [ { gif: 'images/designs/anim/fall-banner.gif', x: 6.95, y: 7.22, w: 80.94 }, { gif: 'images/designs/anim/fall-giveaway.gif', x: 25.55, y: 11.49, w: 68.75 } ] },
+        { label: 'Reminder', src: 'images/designs/giveaways/fall-2024-reminder.jpg', overlays: [ { gif: 'images/designs/anim/fall-banner.gif', x: 9.53, y: 1.51, w: 80.94 } ] },
+        { label: 'Winner', src: 'images/designs/giveaways/fall-2024-winner.jpg' } ] },
+  { title: 'Spring Giveaway', date: '2025', year: 2025,
+    thumb: 'images/designs/giveaways/spring-2025-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/spring-2025-launch.jpg' },
+        { label: 'Reminder', src: 'images/designs/giveaways/spring-2025-reminder.jpg' },
+        { label: 'Winner', src: 'images/designs/giveaways/spring-2025-winner.jpg', overlays: [ { video: 'images/designs/anim/winner-1', x: 0.94, y: 55.31, w: 48.36 }, { video: 'images/designs/anim/winner-2', x: 50.86, y: 55.31, w: 48.36 }, { video: 'images/designs/anim/winner-3', x: 0.94, y: 69.67, w: 48.36 }, { video: 'images/designs/anim/winner-4', x: 50.86, y: 69.67, w: 48.36 } ] } ] },
+  { title: 'Summer Giveaway', date: '2025', year: 2025,
+    thumb: 'images/designs/giveaways/summer-2025-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/summer-2025-launch.jpg', overlays: [ { video: 'images/designs/anim/summer-giveaway', x: 61.47, y: 36.16, w: 30.42 } ] },
+        { label: 'Reminder', src: 'images/designs/giveaways/summer-2025-reminder.jpg', overlays: [ { video: 'images/designs/anim/summer-giveaway', x: 21.22, y: 47.28, w: 15.6 } ] },
+        { label: 'Winner', src: 'images/designs/giveaways/summer-2025-winner.jpg', overlays: [ { video: 'images/designs/anim/winner-1', x: 0.94, y: 47.49, w: 48.36 }, { video: 'images/designs/anim/winner-2', x: 50.86, y: 47.49, w: 48.36 }, { video: 'images/designs/anim/winner-4', x: 50.86, y: 64.33, w: 48.36 } ] } ] },
+  { title: 'Glow Up Giveaway', date: '2025', year: 2025,
+    thumb: 'images/designs/giveaways/glow-up-2025-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/glow-up-2025-launch.jpg' },
+        { label: 'Winner', src: 'images/designs/giveaways/glow-up-2025-winner.jpg' } ] },
+  { title: 'Illuminate Giveaway', date: '2025', year: 2025,
+    thumb: 'images/designs/giveaways/illuminate-2025-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/illuminate-2025-launch.jpg' },
+        { label: 'Reminder', src: 'images/designs/giveaways/illuminate-2025-reminder.jpg' } ] },
+  { title: 'Showtime Giveaway', date: '2025', year: 2025,
+    thumb: 'images/designs/giveaways/showtime-2025-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/showtime-2025-launch.jpg' },
+        { label: 'Reminder', src: 'images/designs/giveaways/showtime-2025-reminder.jpg' } ] },
+  { title: 'Lumi Giveaway', date: '2026', year: 2026,
+    thumb: 'images/designs/giveaways/lumi-2026-launch-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Launch', src: 'images/designs/giveaways/lumi-2026-launch.jpg' },
+        { label: 'Reminder', src: 'images/designs/giveaways/lumi-2026-reminder.jpg' } ] }
+];
+
+const promoShots = ['Hero image', 'Page screenshot', 'Email screenshot'];
+
+/* Summer: Summer 2026 so far. web / emailArt = extra artwork shown above the page / above the email.
+   A series with ONE campaign opens straight onto it; add a second and the grid + year chips appear. */
+const SUMMER = [
+  { title: 'Summer Sale', date: '2026', year: 2026,
+    hero:  'images/designs/summer/2026-hero.jpg',
+    web:   [{ src: 'images/designs/summer/2026-banner.jpg', label: 'Banner artwork' }],
+    page:  null,
+    emailArt: [{ src: 'images/designs/summer/2026-email-header.jpg', label: 'Email header artwork' }],
+    emails: [ { label: 'Email', src: 'images/designs/summer/2026-email.jpg' } ] }
+];
+
+const PROMO_TAGS = ['Email design', 'Email copy', 'Web page design', 'Hero imagery'];
+
+const SPRING = [
+  { title: 'Spring Sale', date: '2025', year: 2025,
+    thumb: 'images/designs/spring/2025-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/spring/2025-email.jpg' } ] },
+  { title: 'Spring Sale', date: '2026', year: 2026,
+    thumb: 'images/designs/spring/2026-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/spring/2026-email.jpg' } ] }
+];
+
+const MEMORIAL = [
+  { title: 'Memorial Day Mega Sale', date: '2024', year: 2024,
+    thumb: 'images/designs/memorial-day/2024-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/memorial-day/2024-email.jpg' } ] },
+  { title: 'Memorial Day Sale', date: '2025', year: 2025,
+    thumb: 'images/designs/memorial-day/2025-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/memorial-day/2025-email.jpg' } ] },
+  { title: 'Memorial Day Sale', date: '2026', year: 2026,
+    thumb: 'images/designs/memorial-day/2026-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/memorial-day/2026-email.jpg' } ] }
+];
+
+const JULY4 = [
+  { title: '4th of July Sale', date: '2024', year: 2024,
+    thumb: 'images/designs/july-4th/2024-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/july-4th/2024-email.jpg' } ] }
+];
+
+const LABOR = [
+  { title: 'Labor Day Sale', date: '2024', year: 2024,
+    thumb: 'images/designs/labor-day/2024-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/labor-day/2024-email.jpg', overlays: [ { gif: 'images/designs/anim/labor-day-2024.gif', x: 54.76, y: 47.03, w: 39.0 } ] } ] },
+  { title: 'Labor Day Sale', date: '2025', year: 2025,
+    thumb: 'images/designs/labor-day/2025-email-thumb.jpg',
+    hero: null, page: null,
+    emailArt: [{ src: 'images/designs/anim/labor-day-2025-hero.gif', label: 'Animated hero (GIF)' }],
+    emails: [
+        { label: 'Email', src: 'images/designs/labor-day/2025-email.jpg' } ] }
+];
+
+const CYBER = [
+  { title: 'Cyber Monday Sale', date: '2024', year: 2024,
+    thumb: 'images/designs/cyber-monday/2024-save-the-date-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Save the date', src: 'images/designs/cyber-monday/2024-save-the-date.jpg' },
+        { label: 'Sale starts', src: 'images/designs/cyber-monday/2024-sale.jpg' },
+        { label: 'Last chance', src: 'images/designs/cyber-monday/2024-last-chance.jpg' } ] },
+  { title: 'Cyber Monday Sale', date: '2025', year: 2025,
+    thumb: 'images/designs/cyber-monday/2025-email-thumb.jpg',
+    hero: null, page: null,
+    emails: [
+        { label: 'Email', src: 'images/designs/cyber-monday/2025-email.jpg' } ] }
+];
+
+/* The series. The FIRST one is the face-out book in the middle of the row; the rest run in calendar order.
+   book (spines): w = width, h = height in px, bg = colour, t = lettering ('caps' | 'sans' | 'italic' | 'up'),
+   d = print on the spine ('band' | 'stripe' | 'dot'), lean = tilts against its neighbour. */
 const designs = [
-  { title: 'Summer Sale Campaign', tags: ['Photoshop', 'Illustrator', 'Email Design'], body: PLACEHOLDER_BODY,
-    cover: 'Hero banner',
-    visuals: ['Hero banner screenshot', 'Landing page screenshot', 'Matching email screenshot'] },
-  { title: 'Giveaway Campaign', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Giveaway banner screenshot', 'Giveaway page screenshot'],
-    book: { w: 54, h: 268, bg: '#E7D64B', t: 'caps', d: 'band', ...LIGHT } },
-  { title: 'Abandoned Cart Series', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Email 1 screenshot', 'Email 2 screenshot', 'Email 3 screenshot'],
-    book: { w: 60, h: 304, bg: '#2D6438', t: 'italic', d: 'stripe', ...DARK } },
-  { title: 'Instagram Reel Edit', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Reel thumbnail or still'],
-    book: { w: 50, h: 250, bg: '#1F3B28', t: 'sans', d: 'dot', ...DARK } },
-  { title: 'Product Launch Banner', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Launch banner screenshot', 'In-site placement screenshot'],
+  { title: 'Giveaways', tags: ['Email design', 'Web page design', 'Hero imagery'], body: GIVEAWAY_BODY,
+    facts: ['7 giveaways', '17 emails'],
+    cover: 'Hero image', items: GIVEAWAYS },
+  { title: 'Spring', tags: PROMO_TAGS, body: PROMO_BODY, items: SPRING,
     book: { w: 62, h: 286, bg: '#AED6CC', t: 'up', ...LIGHT, num: '#1F3B28' } },
-  { title: 'Holiday Sale Page', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Holiday page screenshot', 'Matching email screenshot'],
-    book: { w: 56, h: 262, bg: '#7EB66D', t: 'caps', d: 'band', lean: true, ...LIGHT, num: '#1F3B28' } },
-  { title: 'Brand Photography', tags: [], body: PLACEHOLDER_BODY,
-    visuals: ['Photo 1', 'Photo 2', 'Photo 3'],
-    book: { w: 58, h: 278, bg: '#EBE5BA', t: 'italic', ...LIGHT } }
+  { title: 'Memorial Day', tags: PROMO_TAGS, body: PROMO_BODY, items: MEMORIAL,
+    book: { w: 60, h: 304, bg: '#2D6438', t: 'italic', d: 'stripe', ...DARK } },
+  { title: 'Summer', tags: PROMO_TAGS, body: PROMO_BODY,
+    items: SUMMER,
+    book: { w: 54, h: 268, bg: '#E7D64B', t: 'caps', d: 'band', ...LIGHT } },
+  { title: 'July 4th', tags: PROMO_TAGS, body: PROMO_BODY, items: JULY4,
+    book: { w: 58, h: 278, bg: '#1B6C7C', t: 'italic', ...DARK } },
+  { title: 'Labor Day', tags: PROMO_TAGS, body: PROMO_BODY, items: LABOR,
+    book: { w: 56, h: 262, bg: '#EBE5BA', t: 'caps', d: 'band', lean: true, ...LIGHT } },
+  { title: 'Cyber Monday', tags: PROMO_TAGS, body: PROMO_BODY, items: CYBER,
+    book: { w: 50, h: 250, bg: '#1F3B28', t: 'sans', d: 'dot', ...DARK } }
 ];
 
 /* The row, left to right. A number is a book from the list above (0 = the face-out one).
@@ -813,7 +1012,7 @@ layout.forEach((tok, pos) => {
   const b = document.createElement('button');
   b.type = 'button';
   b.setAttribute('aria-haspopup', 'dialog');
-  b.setAttribute('aria-label', `Open design ${tok + 1} of ${designs.length}: ${d.title}`);
+  b.setAttribute('aria-label', `Open series ${tok + 1} of ${designs.length}: ${d.title}`);
   if (tok === 0) {
     b.className = 'cover';
     b.innerHTML = '<span class="cover-num"></span><span class="cover-art"></span><span class="cover-title"></span>';
@@ -848,7 +1047,7 @@ function openBook(i, spine) {
   lastSpine = spine;
   spine.classList.add('is-open');
 
-  document.getElementById('modal-num').textContent = `Design ${String(i + 1).padStart(2, '0')} / ${String(designs.length).padStart(2, '0')}`;
+  document.getElementById('modal-num').textContent = `Series ${String(i + 1).padStart(2, '0')} / ${String(designs.length).padStart(2, '0')}`;
   document.getElementById('modal-title').textContent = d.title;
 
   const tagBox = document.getElementById('modal-tags');
@@ -857,19 +1056,31 @@ function openBook(i, spine) {
 
   document.getElementById('modal-body').replaceChildren(...d.body.map(t => { const p = document.createElement('p'); p.textContent = t; return p; }));
 
-  document.getElementById('modal-visuals').replaceChildren(...d.visuals.map((v, n) => {
-    if (typeof v === 'string') {
-      const box = document.createElement('div');
-      box.className = 'placeholder shot';
-      box.style.background = tints[n % tints.length];
-      box.textContent = `[ ${v} ]`;
-      return box;
-    }
-    const img = document.createElement('img');
-    img.className = 'shot';
-    img.src = v.src; img.alt = v.alt || '';
-    return img;
-  }));
+  const facts = document.getElementById('modal-facts');
+  facts.replaceChildren(...(d.facts || []).map(t => el('span', '', t)));
+  facts.hidden = !(d.facts && d.facts.length);
+
+  clearAuto();
+  seriesCtx = null;
+  if (d.items) {
+    seriesCtx = { d, view: 'grid', idx: 0, year: null };
+    if (d.items.length === 1) renderDetail(d, 0, null);     // one campaign: no grid to pick from
+    else renderGrid(d, null);
+  } else {
+    document.getElementById('modal-visuals').replaceChildren(...d.visuals.map((v, n) => {
+      if (typeof v === 'string') {
+        const box = document.createElement('div');
+        box.className = 'placeholder shot';
+        box.style.background = tints[n % tints.length];
+        box.textContent = `[ ${v} ]`;
+        return box;
+      }
+      const img = document.createElement('img');
+      img.className = 'shot';
+      img.src = v.src; img.alt = v.alt || '';
+      return img;
+    }));
+  }
 
   scroller.scrollTop = 0;
   const sb = window.innerWidth - document.documentElement.clientWidth;
@@ -883,6 +1094,7 @@ function openBook(i, spine) {
 function closeBook() {
   if (modal.hidden) return;
   modal.classList.remove('open');
+  clearAuto();
   if (lastSpine) lastSpine.classList.remove('is-open');
   closeTimer = setTimeout(() => {
     modal.hidden = true;
@@ -895,7 +1107,202 @@ function closeBook() {
 }
 
 modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeBook(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBook(); });
+
+/* ---------- Series pop-up: filter chips -> grid of campaigns -> one campaign's pieces ---------- */
+let seriesCtx = null;      // { d, view: 'grid' | 'detail', idx, year }
+let stopAuto = [];
+function clearAuto() { stopAuto.forEach(fn => fn()); stopAuto = []; }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function btn(cls, text, label) { const b = el('button', cls, text); b.type = 'button'; if (label) b.setAttribute('aria-label', label); return b; }
+
+function thumb(it, n) {
+  const pic = it.hero || it.thumb;     // the hero once it exists; until then the top of the first email
+  if (pic) { const img = el('img', 'gthumb'); img.src = pic; img.alt = ''; img.loading = 'lazy'; return img; }
+  const ph = el('div', 'gthumb ph', String(n + 1).padStart(2, '0'));
+  ph.style.background = tints[n % tints.length];
+  return ph;
+}
+
+function renderGrid(d, year, focusIdx) {
+  clearAuto();
+  seriesCtx = { d, view: 'grid', idx: focusIdx || 0, year };
+  const kids = [];
+  const years = [...new Set(d.items.map(x => x.year).filter(Boolean))].sort();
+  if (years.length) {
+    const bar = el('div', 'chips'); bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Filter by year');
+    ['All', ...years].forEach(y => {
+      const on = y === 'All' ? !year : y === year;
+      const c = btn('chip' + (on ? ' on' : ''), String(y)); c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      c.addEventListener('click', () => renderGrid(d, y === 'All' ? null : y));
+      bar.append(c);
+    });
+    kids.push(bar);
+  }
+  kids.push(el('p', 'gal-hint', `Pick one to see its hero, page and email.`));
+  const grid = el('div', 'gal');
+  d.items.forEach((it, idx) => {
+    if (year && it.year !== year) return;
+    const c = btn('gcard', '', `Open ${it.title}`);
+    c.dataset.idx = idx;
+    c.append(thumb(it, idx), el('span', 'gcard-title', it.title), el('span', 'gcard-date', it.date));
+    c.addEventListener('click', () => renderDetail(d, idx, year));
+    grid.append(c);
+  });
+  kids.push(grid);
+  document.getElementById('modal-visuals').replaceChildren(...kids);
+  if (focusIdx != null) { const c = grid.querySelector(`[data-idx="${focusIdx}"]`); if (c) c.focus({ preventScroll: true }); }
+}
+
+function visibleIdx(d, year) { return d.items.map((_, i) => i).filter(i => !year || d.items[i].year === year); }
+
+function stepDetail(delta) {
+  if (!seriesCtx || seriesCtx.view !== 'detail') return;
+  const { d, idx, year } = seriesCtx; const list = visibleIdx(d, year); const next = list[list.indexOf(idx) + delta];
+  if (next != null) renderDetail(d, next, year);
+}
+
+function renderDetail(d, idx, year) {
+  clearAuto();
+  seriesCtx = { d, view: 'detail', idx, year };
+  const it = d.items[idx]; const list = visibleIdx(d, year); const pos = list.indexOf(idx);
+
+  const solo = d.items.length === 1;
+  const bar = el('div', 'dbar');
+  const back = btn('dback', `← All ${d.title.toLowerCase()}`);
+  back.addEventListener('click', () => renderGrid(d, year, idx));
+  const nav = el('div', 'dnav');
+  const prev = btn('', '←', 'Previous'); prev.disabled = pos <= 0; prev.addEventListener('click', () => stepDetail(-1));
+  const next = btn('', '→', 'Next'); next.disabled = pos >= list.length - 1; next.addEventListener('click', () => stepDetail(1));
+  nav.append(prev, el('span', '', `${pos + 1} / ${list.length}`), next);
+  bar.append(back, nav);
+
+  const head = el('div', 'dhead' + (solo ? ' solo' : '')); head.append(el('h4', '', it.title), el('p', '', it.date));
+
+  const parts = [];
+  if (!solo) parts.push(bar);
+  parts.push(head, art(it.hero, 'Hero background', `${it.title} — hero background`));
+  (it.web || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
+  parts.push(frame('Page', it.page, 'page', 'Full-page screenshot — scrolls here', it.title));
+  (it.emailArt || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
+  parts.push(emailSet(it));
+
+  document.getElementById('modal-visuals').replaceChildren(...parts);
+  const vis = document.getElementById('modal-visuals');
+  scroller.scrollTop = window.innerWidth <= 900 ? Math.max(0, vis.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 12) : 0;
+  if (!solo) back.focus({ preventScroll: true });
+}
+
+function art(src, label, alt) {
+  const fig = el('figure', 'art');
+  if (src) { const img = el('img'); img.src = src; img.alt = alt; fig.append(img); }
+  else fig.append(el('div', 'placeholder art-ph', `[ ${label} ]`));
+  fig.append(el('figcaption', '', label));
+  return fig;
+}
+
+/* One scrolling frame. overlays = GIFs / looping videos that play in place on top of the still screenshot
+   (x, y, w are percentages of the screenshot, so they stay put at any width). tabLabel = e.g. 'Reminder'. */
+function frame(label, src, kind, phText, title, overlays, tabLabel) {
+  const fig = el('figure', 'frame ' + kind);
+  const bar = el('div', 'frame-bar'); bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<i></i><i></i><i></i>';
+  const vp = el('div', 'frame-vp'); vp.tabIndex = 0; vp.setAttribute('role', 'region');
+  const what = tabLabel && tabLabel !== label ? `${label.toLowerCase()} (${tabLabel.toLowerCase()})` : label.toLowerCase();
+  vp.setAttribute('aria-label', `${title} — ${what}, full length. It scrolls on its own; hover or touch to scroll it yourself.`);
+  const stops = [];
+  if (src) {
+    const wrap = el('div', 'tall-wrap');
+    const img = el('img', 'tall'); img.src = src; img.alt = `${title} — ${what} design, full length`; wrap.append(img);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) (overlays || []).forEach(o => wrap.append(overlay(o, vp, stops)));
+    vp.append(wrap);
+  } else vp.append(el('div', 'tall tall-ph', `[ ${phText} ]`));
+  fig.append(bar, vp, el('figcaption', '', tabLabel && tabLabel !== label ? `${label} — ${tabLabel}` : label));
+  stops.push(autoScroll(vp));
+  fig._stop = () => stops.forEach(fn => fn());
+  stopAuto.push(fig._stop);
+  return fig;
+}
+
+function overlay(o, vp, stops) {
+  let node;
+  if (o.video) {
+    node = el('video', 'ov');
+    node.muted = true; node.loop = true; node.autoplay = true; node.playsInline = true; node.preload = 'metadata';
+    node.setAttribute('muted', ''); node.setAttribute('playsinline', ''); node.disablePictureInPicture = true;
+    [['mp4', 'video/mp4'], ['webm', 'video/webm']].forEach(([ext, type]) => { const s = el('source'); s.src = `${o.video}.${ext}`; s.type = type; node.append(s); });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) node.play().catch(() => {}); else node.pause(); }), { root: vp, threshold: 0.1 });
+    io.observe(node); stops.push(() => io.disconnect());
+  } else { node = el('img', 'ov'); node.src = o.gif; node.alt = ''; }
+  node.setAttribute('aria-hidden', 'true');
+  node.style.cssText = `left:${o.x}%;top:${o.y}%;width:${o.w}%`;
+  return node;
+}
+
+/* The email(s) of one campaign. One email = a plain frame. Two or more = tabs (Launch / Reminder / Winner)
+   above a single frame that swaps. Old single-file entries ( email: 'path.jpg' ) still work. */
+function emailSet(it) {
+  const list = it.emails || (it.email ? [{ label: 'Email', src: it.email }] : []);
+  const ph = 'Full-length email screenshot — scrolls here';
+  if (!list.length) return frame('Email', null, 'email', ph, it.title);
+  if (list.length === 1) return frame('Email', list[0].src, 'email', ph, it.title, list[0].overlays);
+  const box = el('div', 'email-set');
+  const bar = el('div', 'chips'); bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Choose an email');
+  let fig = null, cur = -1;
+  const chips = list.map((e, n) => { const c = btn('chip', e.label); c.addEventListener('click', () => show(n)); bar.append(c); return c; });
+  function show(n) {
+    if (n === cur) return;
+    cur = n;
+    chips.forEach((c, i) => { c.classList.toggle('on', i === n); c.setAttribute('aria-pressed', i === n ? 'true' : 'false'); });
+    const next = frame('Email', list[n].src, 'email', ph, it.title, list[n].overlays, list[n].label);
+    if (fig) { fig._stop(); fig.replaceWith(next); } else box.append(next);
+    fig = next;
+  }
+  box.append(bar);
+  show(0);
+  return box;
+}
+
+/* A slow top-to-bottom scroll that loops, like a short screen recording. Pauses while you hover/touch/focus it
+   (so you can take over), only runs while it is on screen, and does nothing for reduced-motion visitors. */
+function autoScroll(vp) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
+  const SPEED = 46, REWIND = 220;                       // px per second
+  let pos = 0, last = 0, wait = 900, dir = 1, paused = false, onScreen = false, raf = 0, touchTimer = 0;
+  const io = new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { root: scroller, threshold: 0.3 });
+  io.observe(vp);
+  const pause = () => { paused = true; clearTimeout(touchTimer); };
+  const resume = () => { pos = vp.scrollTop; paused = false; };
+  vp.addEventListener('pointermove', pause); vp.addEventListener('pointerdown', pause); vp.addEventListener('wheel', pause, { passive: true });
+  vp.addEventListener('pointerleave', resume);
+  vp.addEventListener('focusin', pause); vp.addEventListener('focusout', resume);
+  vp.addEventListener('touchstart', pause, { passive: true });
+  vp.addEventListener('touchend', () => { touchTimer = setTimeout(resume, 2500); }, { passive: true });
+  function tick(t) {
+    raf = requestAnimationFrame(tick);
+    const dt = Math.min(64, t - (last || t)); last = t;
+    if (paused || !onScreen) return;
+    if (wait > 0) { wait -= dt; return; }
+    const max = vp.scrollHeight - vp.clientHeight;
+    if (max <= 4) return;
+    if (Math.abs(vp.scrollTop - pos) > 2) pos = vp.scrollTop;   // you scrolled it yourself: carry on from there
+    pos += (dir === 1 ? SPEED : -REWIND) * dt / 1000;
+    pos = Math.max(0, Math.min(max, pos));
+    vp.scrollTop = pos;
+    if (dir === 1 && pos >= max - 0.5) { dir = -1; wait = 1500; }
+    else if (dir === -1 && pos <= 0.5) { dir = 1; wait = 1100; }
+  }
+  raf = requestAnimationFrame(tick);
+  return () => { cancelAnimationFrame(raf); io.disconnect(); clearTimeout(touchTimer); };
+}
+
+document.addEventListener('keydown', e => {
+  if (modal.hidden) return;
+  if (e.key === 'Escape') {
+    if (seriesCtx && seriesCtx.view === 'detail' && seriesCtx.d.items.length > 1) renderGrid(seriesCtx.d, seriesCtx.year, seriesCtx.idx);   // first step back to the grid
+    else closeBook();
+  } else if (seriesCtx && seriesCtx.view === 'detail' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    stepDetail(e.key === 'ArrowRight' ? 1 : -1);
+  }
+});
 
 </script>
 </body>

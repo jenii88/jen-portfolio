@@ -24,8 +24,14 @@ Coding → Ch. 4 Résumé → Closing (which links back to the Cover).
 
 ## Where to edit things
 
-- Designs list (titles, tags, write-ups, screenshots, spine colours): the
-  `designs` array in the script at the bottom of `index.html`.
+- Designs: seven series on the shelf (Giveaways face-out, then Spring, Memorial
+  Day, Summer, July 4th, Labor Day, Cyber Monday). Titles, write-ups, tags and
+  spine colours are in the `designs` array in the script at the bottom of
+  `index.html`.
+- Giveaways: the 12 slots are in the `GIVEAWAYS` list just above it. Fill in
+  title, date, year and the three image paths for each one; images go in
+  `images/designs/giveaways/` (see the README.txt in that folder). Anything
+  left empty shows a placeholder.
 - Everything else: edit the matching `<section id="...">` in `index.html`.
 
 ## Known placeholders still to fill in
@@ -89,3 +95,23 @@ steps.
 
 In the Vercel project → **Settings → Domains**, you can add a domain you
 own, or just keep the free `*.vercel.app` one.
+
+
+---
+
+## Summer series (first promo series filled in)
+
+Summer 2026 is in: hero, banner, email header artwork and the full email. The page screenshot is still a placeholder.
+Details and file names are in `images/designs/summer/README.txt`. The data lives in the `SUMMER` list inside `index.html`.
+The other five promo series (Spring, Memorial Day, July 4th, Labor Day, Cyber Monday) are placeholders until their content is added.
+
+
+---
+
+## Emails are in (all six promo series + giveaways)
+
+- Giveaways: 7 giveaways, 17 emails (Launch / Reminder / Winner tabs). Promo series: Spring, Memorial Day, Summer,
+  July 4th, Labor Day, Cyber Monday - 11 campaigns.
+- Heroes and pages are still placeholders (set `hero:` / `page:` in the data near the top of the script in `index.html`).
+- GIFs play in place over the email screenshots. The big ones are small looping videos (mp4 + webm) in `images/designs/anim/`.
+- A series with one campaign opens straight onto it; two or more show the year filter and a grid.
