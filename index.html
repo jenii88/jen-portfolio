@@ -325,8 +325,8 @@
   .frame .tall { display: block; width: 100%; height: auto; }
   .tall-wrap { position: relative; line-height: 0; }
   .tall-wrap .ov { position: absolute; display: block; height: auto; pointer-events: none; }
-  .email-set { display: flex; flex-direction: column; gap: 12px; }
-  .email-set .chips { justify-content: center; }
+  .email-set, .page-set { display: flex; flex-direction: column; gap: 12px; }
+  .email-set .chips, .page-set .chips { justify-content: center; }
   .frame .tall-ph { height: 1500px; padding: 18px; font-size: 13px; font-style: italic; color: var(--ink-70); background: linear-gradient(180deg, rgba(39,139,158,0.10) 0 24%, rgba(231,214,75,0.18) 24% 48%, rgba(76,151,94,0.10) 48% 74%, rgba(39,139,158,0.10) 74% 100%); }
   .frame figcaption { font-size: 12.5px; color: var(--ink-70); text-align: center; }
   .frame.rec .frame-vp { height: auto; overflow: hidden; position: relative; background: #fff; }
@@ -817,13 +817,17 @@ const GIVEAWAY_BODY = [
 const LIGHT = { fg: '#1F3B28', num: '#2D6438' };
 const DARK  = { fg: '#F4F2E2', num: '#EBE5BA' };
 
+/* A page recording: rec('folder/name') = name.mp4 + name.webm + name-poster.jpg, shown at 1280 x 606 (the shape of the recordings). */
+function rec(base, ratio) { return { video: base, poster: base + '-poster.jpg', ratio: ratio || '1280 / 606' }; }
+
 /* Giveaways: one entry per giveaway, oldest first. Each has:
      title, date, year   - the year makes the 2024 / 2025 / 2026 filter chips work
      hero:   'images/designs/giveaways/fall-2024-hero.jpg'   the hero background (null = placeholder)
      page:   'images/designs/giveaways/fall-2024-page.jpg'   ONE tall full-page screenshot (null = placeholder)
-             or a screen recording of the page (a short silent video):  { video: 'images/designs/giveaways/fall-2024-page' }
-             - give the path WITHOUT the extension; the folder needs both a .mp4 and a .webm of it.
-             optional: poster: 'path.jpg' (still shown first / for reduced-motion visitors), ratio: '16 / 9' (the video's shape).
+             or a screen recording of the page (a short silent video):  page: rec('images/designs/giveaways/fall-2024-page')
+             - the path has NO extension; the folder needs  <name>.mp4, <name>.webm and <name>-poster.jpg.
+             - two or more recordings of one campaign (e.g. a sneak-peek page and the live sale page) become tabs:
+               page: [ { label: 'Sneak peek', ...rec('...') }, { label: 'Sale live', ...rec('...') } ]
      thumb:  the small picture on the grid card until a hero is added
      emails: one entry per email. With 2+ the pop-up shows tabs (Launch / Reminder / Winner).
              overlays: GIFs that play in place on top of the screenshot (x, y, w are % of the screenshot). */
@@ -845,14 +849,14 @@ const GIVEAWAYS = [
   { title: 'Summer Giveaway', date: '2025', year: 2025,
     thumb: 'images/designs/giveaways/summer-2025-launch-thumb.jpg',
     hero: null,
-    page: { video: 'images/designs/giveaways/summer-2025-page', poster: 'images/designs/giveaways/summer-2025-page-poster.jpg', ratio: '1122 / 466' },
+    page: rec('images/designs/giveaways/summer-2025-page'),
     emails: [
         { label: 'Launch', src: 'images/designs/giveaways/summer-2025-launch.jpg', overlays: [ { video: 'images/designs/anim/summer-giveaway', x: 61.47, y: 36.16, w: 30.42 } ] },
         { label: 'Reminder', src: 'images/designs/giveaways/summer-2025-reminder.jpg', overlays: [ { video: 'images/designs/anim/summer-giveaway', x: 21.22, y: 47.28, w: 15.6 } ] },
         { label: 'Winner', src: 'images/designs/giveaways/summer-2025-winner.jpg', overlays: [ { video: 'images/designs/anim/winner-1', x: 0.94, y: 47.49, w: 48.36 }, { video: 'images/designs/anim/winner-2', x: 50.86, y: 47.49, w: 48.36 }, { video: 'images/designs/anim/winner-4', x: 50.86, y: 64.33, w: 48.36 } ] } ] },
   { title: 'Glow Up Giveaway', date: '2025', year: 2025,
     thumb: 'images/designs/giveaways/glow-up-2025-launch-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: rec('images/designs/giveaways/glow-up-2025-page'),
     emails: [
         { label: 'Launch', src: 'images/designs/giveaways/glow-up-2025-launch.jpg',
           art: [{ video: 'images/designs/anim/winner-1', poster: 'images/designs/anim/winner-1-poster.jpg', label: 'Animated lightbox', max: 320 }] },
@@ -871,7 +875,7 @@ const GIVEAWAYS = [
         { label: 'Reminder', src: 'images/designs/giveaways/showtime-2025-reminder.jpg' } ] },
   { title: 'Lumi Giveaway', date: '2026', year: 2026,
     thumb: 'images/designs/giveaways/lumi-2026-launch-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: rec('images/designs/giveaways/lumi-2026-page'),
     emails: [
         { label: 'Launch', src: 'images/designs/giveaways/lumi-2026-launch.jpg' },
         { label: 'Reminder', src: 'images/designs/giveaways/lumi-2026-reminder.jpg' } ] }
@@ -895,7 +899,7 @@ const PROMO_TAGS = ['Email design', 'Email copy', 'Web page design', 'Hero image
 const SPRING = [
   { title: 'Spring Sale', date: '2025', year: 2025,
     thumb: 'images/designs/spring/2025-email-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: rec('images/designs/spring/2025-page'),
     emails: [
         { label: 'Email', src: 'images/designs/spring/2025-email.jpg' } ] },
   { title: 'Spring Sale', date: '2026', year: 2026,
@@ -913,7 +917,7 @@ const MEMORIAL = [
         { label: 'Email', src: 'images/designs/memorial-day/2024-email.jpg' } ] },
   { title: 'Memorial Day Sale', date: '2025', year: 2025,
     thumb: 'images/designs/memorial-day/2025-email-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: rec('images/designs/memorial-day/2025-page'),
     emails: [
         { label: 'Email', src: 'images/designs/memorial-day/2025-email.jpg' } ] },
   { title: 'Memorial Day Sale', date: '2026', year: 2026,
@@ -948,14 +952,14 @@ const LABOR = [
 const CYBER = [
   { title: 'Cyber Monday Sale', date: '2024', year: 2024,
     thumb: 'images/designs/cyber-monday/2024-save-the-date-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: [ { label: 'Sneak peek', ...rec('images/designs/cyber-monday/2024-page-sneak-peek') }, { label: 'Sale live', ...rec('images/designs/cyber-monday/2024-page-sale') } ],
     emails: [
         { label: 'Save the date', src: 'images/designs/cyber-monday/2024-save-the-date.jpg' },
         { label: 'Sale starts', src: 'images/designs/cyber-monday/2024-sale.jpg' },
         { label: 'Last chance', src: 'images/designs/cyber-monday/2024-last-chance.jpg' } ] },
   { title: 'Cyber Monday Sale', date: '2025', year: 2025,
     thumb: 'images/designs/cyber-monday/2025-email-thumb.jpg',
-    hero: null, page: null,
+    hero: null, page: rec('images/designs/cyber-monday/2025-page'),
     emails: [
         { label: 'Email', src: 'images/designs/cyber-monday/2025-email.jpg' } ] }
 ];
@@ -1195,7 +1199,7 @@ function renderDetail(d, idx, year) {
   if (!solo) parts.push(bar);
   parts.push(head, art(it.hero, 'Hero background', `${it.title} — hero background`));
   (it.web || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
-  parts.push(it.page && typeof it.page === 'object' ? recordingFrame(it.page, it.title) : frame('Page', it.page, 'page', 'Full-page screenshot — scrolls here', it.title));
+  parts.push(pageSet(it));
   (it.emailArt || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
   parts.push(emailSet(it));
 
@@ -1235,6 +1239,30 @@ function frame(label, src, kind, phText, title, overlays, tabLabel) {
   return fig;
 }
 
+/* The page of one campaign: a screenshot, one recording, or several recordings shown as tabs (like the emails). */
+function pageSet(it) {
+  const p = it.page;
+  const ph = 'Full-page screenshot — scrolls here';
+  if (!Array.isArray(p)) return p && typeof p === 'object' ? recordingFrame(p, it.title) : frame('Page', p, 'page', ph, it.title);
+  if (!p.length) return frame('Page', null, 'page', ph, it.title);
+  if (p.length === 1) return recordingFrame(p[0], it.title);
+  const box = el('div', 'page-set');
+  const bar = el('div', 'chips'); bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Choose a page recording');
+  let fig = null, cur = -1;
+  const chips = p.map((r, n) => { const c = btn('chip', r.label || `Page ${n + 1}`); c.addEventListener('click', () => show(n)); bar.append(c); return c; });
+  function show(n) {
+    if (n === cur) return;
+    cur = n;
+    chips.forEach((c, i) => { c.classList.toggle('on', i === n); c.setAttribute('aria-pressed', i === n ? 'true' : 'false'); });
+    const next = recordingFrame(p[n], it.title, p[n].label);
+    if (fig) { fig._stop(); fig.replaceWith(next); } else box.append(next);
+    fig = next;
+  }
+  box.append(bar);
+  show(0);
+  return box;
+}
+
 /* A page shown as a screen recording (a short silent looping video) in the same browser-style frame.
    p = { video: 'path-without-extension' (needs .mp4 + .webm), poster: 'still.jpg', ratio: '16 / 9' }.
    It plays while it is on screen and pauses when scrolled away, and has a pause button. Visitors who prefer reduced
@@ -1242,7 +1270,7 @@ function frame(label, src, kind, phText, title, overlays, tabLabel) {
 const REC_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 const REC_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
 
-function recordingFrame(p, title) {
+function recordingFrame(p, title, tabLabel) {
   if (!p.video) {
     console.warn('Page recording: no video path given for', title);
     return frame('Page', null, 'page', 'Page recording — set  page: { video: "path-without-extension" }', title);
@@ -1253,7 +1281,7 @@ function recordingFrame(p, title) {
   const vp = el('div', 'frame-vp'); vp.style.aspectRatio = p.ratio || '16 / 9';
   const v = el('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
   v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.disablePictureInPicture = true;
-  v.setAttribute('aria-label', `${title} — page recording`);
+  v.setAttribute('aria-label', `${title} — page recording${tabLabel ? ' (' + tabLabel.toLowerCase() + ')' : ''}`);
   if (p.poster) v.poster = p.poster;
   [['mp4', 'video/mp4'], ['webm', 'video/webm']].forEach(([ext, type]) => { const s = el('source'); s.src = `${p.video}.${ext}`; s.type = type; v.append(s); });
   const tog = btn('rec-toggle', '');
@@ -1264,7 +1292,7 @@ function recordingFrame(p, title) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { if (!userPaused) v.play().catch(() => {}); } else v.pause(); }), { root: scroller, threshold: 0.25 });
   io.observe(v);
   vp.append(v, tog);
-  fig.append(bar, vp, el('figcaption', '', 'Page — screen recording'));
+  fig.append(bar, vp, el('figcaption', '', tabLabel ? `Page — ${tabLabel}` : 'Page — screen recording'));
   fig._stop = () => { io.disconnect(); v.pause(); };
   stopAuto.push(fig._stop);
   return fig;

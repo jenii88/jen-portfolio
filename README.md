@@ -122,8 +122,13 @@ The other five promo series (Spring, Memorial Day, July 4th, Labor Day, Cyber Mo
 
 A campaign's `page:` can be a screen recording of the page instead of a screenshot:
 
-    page: { video: 'images/designs/summer/2026-page', poster: 'images/designs/summer/2026-page-poster.jpg' }
+    page: rec('images/designs/spring/2025-page')
 
-Give the path without the extension; the folder needs both `2026-page.mp4` and `2026-page.webm`. Optional `ratio: '16 / 9'` is the
-video's shape. The video is silent, loops while it is on screen, pauses when scrolled away, and has a pause button. The still
-`poster` shows first (and for visitors who prefer reduced motion). Keep recordings short (10-30 s) so the site stays light.
+The folder needs three files with that name: `2025-page.mp4`, `2025-page.webm` and `2025-page-poster.jpg` (the still shown first, and
+for visitors who prefer reduced motion). The video is silent, loops while it is on screen, pauses when scrolled away, and has a pause
+button. Recordings are 1280 x 606; keep them short so the site stays light.
+
+Two or more recordings of one campaign (for example a sneak-peek page and the live sale page) become tabs:
+
+    page: [ { label: 'Sneak peek', ...rec('images/designs/cyber-monday/2024-page-sneak-peek') },
+            { label: 'Sale live',  ...rec('images/designs/cyber-monday/2024-page-sale') } ]
