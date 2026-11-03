@@ -115,3 +115,15 @@ The other five promo series (Spring, Memorial Day, July 4th, Labor Day, Cyber Mo
 - Heroes and pages are still placeholders (set `hero:` / `page:` in the data near the top of the script in `index.html`).
 - GIFs play in place over the email screenshots. The big ones are small looping videos (mp4 + webm) in `images/designs/anim/`.
 - A series with one campaign opens straight onto it; two or more show the year filter and a grid.
+
+---
+
+## Page recordings
+
+A campaign's `page:` can be a screen recording of the page instead of a screenshot:
+
+    page: { video: 'images/designs/summer/2026-page', poster: 'images/designs/summer/2026-page-poster.jpg' }
+
+Give the path without the extension; the folder needs both `2026-page.mp4` and `2026-page.webm`. Optional `ratio: '16 / 9'` is the
+video's shape. The video is silent, loops while it is on screen, pauses when scrolled away, and has a pause button. The still
+`poster` shows first (and for visitors who prefer reduced motion). Keep recordings short (10-30 s) so the site stays light.

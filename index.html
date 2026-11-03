@@ -329,6 +329,12 @@
   .email-set .chips { justify-content: center; }
   .frame .tall-ph { height: 1500px; padding: 18px; font-size: 13px; font-style: italic; color: var(--ink-70); background: linear-gradient(180deg, rgba(39,139,158,0.10) 0 24%, rgba(231,214,75,0.18) 24% 48%, rgba(76,151,94,0.10) 48% 74%, rgba(39,139,158,0.10) 74% 100%); }
   .frame figcaption { font-size: 12.5px; color: var(--ink-70); text-align: center; }
+  .frame.rec .frame-vp { height: auto; overflow: hidden; position: relative; background: #fff; }
+  .frame.rec video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .rec-toggle { position: absolute; right: 10px; bottom: 10px; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; color: var(--ink); background: rgba(255, 255, 255, 0.92); box-shadow: 0 2px 8px rgba(31, 59, 40, 0.25); }
+  .rec-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+  .rec-toggle:hover { background: #fff; }
+  .rec-toggle:focus-visible { outline: 3px solid var(--water); outline-offset: 2px; }
   .frame.email { width: 100%; max-width: 380px; align-self: center; }
   .frame.email .frame-vp { height: 480px; }
   .frame.email .tall-ph { height: 1800px; }
@@ -815,6 +821,9 @@ const DARK  = { fg: '#F4F2E2', num: '#EBE5BA' };
      title, date, year   - the year makes the 2024 / 2025 / 2026 filter chips work
      hero:   'images/designs/giveaways/fall-2024-hero.jpg'   the hero background (null = placeholder)
      page:   'images/designs/giveaways/fall-2024-page.jpg'   ONE tall full-page screenshot (null = placeholder)
+             or a screen recording of the page (a short silent video):  { video: 'images/designs/giveaways/fall-2024-page' }
+             - give the path WITHOUT the extension; the folder needs both a .mp4 and a .webm of it.
+             optional: poster: 'path.jpg' (still shown first / for reduced-motion visitors), ratio: '16 / 9' (the video's shape).
      thumb:  the small picture on the grid card until a hero is added
      emails: one entry per email. With 2+ the pop-up shows tabs (Launch / Reminder / Winner).
              overlays: GIFs that play in place on top of the screenshot (x, y, w are % of the screenshot). */
@@ -1185,7 +1194,7 @@ function renderDetail(d, idx, year) {
   if (!solo) parts.push(bar);
   parts.push(head, art(it.hero, 'Hero background', `${it.title} — hero background`));
   (it.web || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
-  parts.push(frame('Page', it.page, 'page', 'Full-page screenshot — scrolls here', it.title));
+  parts.push(it.page && typeof it.page === 'object' ? recordingFrame(it.page, it.title) : frame('Page', it.page, 'page', 'Full-page screenshot — scrolls here', it.title));
   (it.emailArt || []).forEach(w => parts.push(art(w.src, w.label, `${it.title} — ${w.label.toLowerCase()}`)));
   parts.push(emailSet(it));
 
@@ -1225,6 +1234,41 @@ function frame(label, src, kind, phText, title, overlays, tabLabel) {
   return fig;
 }
 
+/* A page shown as a screen recording (a short silent looping video) in the same browser-style frame.
+   p = { video: 'path-without-extension' (needs .mp4 + .webm), poster: 'still.jpg', ratio: '16 / 9' }.
+   It plays while it is on screen and pauses when scrolled away, and has a pause button. Visitors who prefer reduced
+   motion see the still and press play themselves. */
+const REC_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+const REC_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+
+function recordingFrame(p, title) {
+  if (!p.video) {
+    console.warn('Page recording: no video path given for', title);
+    return frame('Page', null, 'page', 'Page recording — set  page: { video: "path-without-extension" }', title);
+  }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fig = el('figure', 'frame page rec');
+  const bar = el('div', 'frame-bar'); bar.setAttribute('aria-hidden', 'true'); bar.innerHTML = '<i></i><i></i><i></i>';
+  const vp = el('div', 'frame-vp'); vp.style.aspectRatio = p.ratio || '16 / 9';
+  const v = el('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.disablePictureInPicture = true;
+  v.setAttribute('aria-label', `${title} — page recording`);
+  if (p.poster) v.poster = p.poster;
+  [['mp4', 'video/mp4'], ['webm', 'video/webm']].forEach(([ext, type]) => { const s = el('source'); s.src = `${p.video}.${ext}`; s.type = type; v.append(s); });
+  const tog = btn('rec-toggle', '');
+  let userPaused = reduce;                       // reduced motion: wait until the visitor presses play
+  const sync = () => { tog.innerHTML = v.paused ? REC_PLAY : REC_PAUSE; tog.setAttribute('aria-label', v.paused ? 'Play page recording' : 'Pause page recording'); };
+  v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+  tog.addEventListener('click', () => { if (v.paused) { userPaused = false; v.play().catch(() => {}); } else { userPaused = true; v.pause(); } });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { if (!userPaused) v.play().catch(() => {}); } else v.pause(); }), { root: scroller, threshold: 0.25 });
+  io.observe(v);
+  vp.append(v, tog);
+  fig.append(bar, vp, el('figcaption', '', 'Page — screen recording'));
+  fig._stop = () => { io.disconnect(); v.pause(); };
+  stopAuto.push(fig._stop);
+  return fig;
+}
+
 function overlay(o, vp, stops) {
   let node;
   if (o.video) {
@@ -1244,9 +1288,10 @@ function overlay(o, vp, stops) {
    screenshot: { video: 'path-without-extension', poster, label, max } or { src: 'x.gif', label }). */
 function emailPane(e, it, ph, tabLabel) {
   const pane = el('div', 'email-pane');
-  (e.art || []).forEach(a => pane.append(artMedia(a, it.title)));
+  const stops = [];
+  (e.art || []).forEach(a => { const f = artMedia(a, it.title); pane.append(f); if (f._stop) stops.push(f._stop); });
   const fr = frame('Email', e.src, 'email', ph, it.title, e.overlays, tabLabel);
-  pane.append(fr); pane._stop = fr._stop;
+  pane.append(fr); stops.push(fr._stop); pane._stop = () => stops.forEach(fn => fn());
   return pane;
 }
 
@@ -1261,6 +1306,10 @@ function artMedia(a, title) {
     v.setAttribute('aria-label', `${title} — ${a.label.toLowerCase()}`);
     [['mp4', 'video/mp4'], ['webm', 'video/webm']].forEach(([ext, type]) => { const s = el('source'); s.src = `${a.video}.${ext}`; s.type = type; v.append(s); });
     fig.append(v);
+    if (!reduce) {            // play while it is on screen, pause when scrolled away (the same in every browser)
+      const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) v.play().catch(() => {}); else v.pause(); }), { root: scroller, threshold: 0.1 });
+      io.observe(v); fig._stop = () => io.disconnect(); stopAuto.push(fig._stop);
+    }
   } else { const img = el('img'); img.src = a.src; img.alt = `${title} — ${a.label.toLowerCase()}`; fig.append(img); }
   fig.append(el('figcaption', '', a.label));
   return fig;
