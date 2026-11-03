@@ -286,6 +286,8 @@
   .art img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 1px 3px rgba(31, 59, 40,0.08), 0 12px 28px rgba(31, 59, 40,0.1); }
   .art .art-ph { aspect-ratio: 3 / 1; border-radius: 12px; display: grid; place-items: center; background: rgba(39, 139, 158, 0.10); }
   .art figcaption { font-size: 12.5px; color: var(--ink-70); text-align: center; }
+  .art video { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 1px 3px rgba(31, 59, 40,0.08), 0 12px 28px rgba(31, 59, 40,0.1); }
+  .email-pane { display: flex; flex-direction: column; gap: 18px; }
 
   .modal-facts { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13.5px; font-weight: 500; color: var(--ink-70); }
   .modal-facts[hidden] { display: none; }
@@ -842,8 +844,9 @@ const GIVEAWAYS = [
     thumb: 'images/designs/giveaways/glow-up-2025-launch-thumb.jpg',
     hero: null, page: null,
     emails: [
-        { label: 'Launch', src: 'images/designs/giveaways/glow-up-2025-launch.jpg' },
-        { label: 'Winner', src: 'images/designs/giveaways/glow-up-2025-winner.jpg' } ] },
+        { label: 'Launch', src: 'images/designs/giveaways/glow-up-2025-launch.jpg',
+          art: [{ video: 'images/designs/anim/winner-1', poster: 'images/designs/anim/winner-1-poster.jpg', label: 'Animated lightbox', max: 320 }] },
+        { label: 'Winner', src: 'images/designs/giveaways/glow-up-2025-winner.jpg', overlays: [ { video: 'images/designs/anim/winner-1', x: 0.94, y: 50.24, w: 48.36 }, { video: 'images/designs/anim/winner-2', x: 50.86, y: 50.24, w: 48.36 }, { video: 'images/designs/anim/winner-3', x: 0.94, y: 66.22, w: 48.36 }, { video: 'images/designs/anim/winner-4', x: 50.86, y: 66.22, w: 48.36 } ] } ] },
   { title: 'Illuminate Giveaway', date: '2025', year: 2025,
     thumb: 'images/designs/giveaways/illuminate-2025-launch-thumb.jpg',
     hero: null, page: null,
@@ -927,7 +930,7 @@ const LABOR = [
   { title: 'Labor Day Sale', date: '2025', year: 2025,
     thumb: 'images/designs/labor-day/2025-email-thumb.jpg',
     hero: null, page: null,
-    emailArt: [{ src: 'images/designs/anim/labor-day-2025-hero.gif', label: 'Animated hero (GIF)' }],
+    emailArt: [{ src: 'images/designs/anim/labor-day-2025.gif', label: 'Animated GIF (separate from the email)' }],
     emails: [
         { label: 'Email', src: 'images/designs/labor-day/2025-email.jpg' } ] }
 ];
@@ -1237,13 +1240,39 @@ function overlay(o, vp, stops) {
   return node;
 }
 
+/* One email = its scrolling frame, plus any 'art' shown just above it (an animated piece that is not part of the
+   screenshot: { video: 'path-without-extension', poster, label, max } or { src: 'x.gif', label }). */
+function emailPane(e, it, ph, tabLabel) {
+  const pane = el('div', 'email-pane');
+  (e.art || []).forEach(a => pane.append(artMedia(a, it.title)));
+  const fr = frame('Email', e.src, 'email', ph, it.title, e.overlays, tabLabel);
+  pane.append(fr); pane._stop = fr._stop;
+  return pane;
+}
+
+function artMedia(a, title) {
+  const fig = el('figure', 'art');
+  if (a.max) { fig.style.maxWidth = a.max + 'px'; fig.style.alignSelf = 'center'; fig.style.width = '100%'; }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (a.video) {
+    const v = el('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto'; v.autoplay = !reduce;
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.disablePictureInPicture = true;
+    if (a.poster) v.poster = a.poster;
+    v.setAttribute('aria-label', `${title} — ${a.label.toLowerCase()}`);
+    [['mp4', 'video/mp4'], ['webm', 'video/webm']].forEach(([ext, type]) => { const s = el('source'); s.src = `${a.video}.${ext}`; s.type = type; v.append(s); });
+    fig.append(v);
+  } else { const img = el('img'); img.src = a.src; img.alt = `${title} — ${a.label.toLowerCase()}`; fig.append(img); }
+  fig.append(el('figcaption', '', a.label));
+  return fig;
+}
+
 /* The email(s) of one campaign. One email = a plain frame. Two or more = tabs (Launch / Reminder / Winner)
    above a single frame that swaps. Old single-file entries ( email: 'path.jpg' ) still work. */
 function emailSet(it) {
   const list = it.emails || (it.email ? [{ label: 'Email', src: it.email }] : []);
   const ph = 'Full-length email screenshot — scrolls here';
   if (!list.length) return frame('Email', null, 'email', ph, it.title);
-  if (list.length === 1) return frame('Email', list[0].src, 'email', ph, it.title, list[0].overlays);
+  if (list.length === 1) return emailPane(list[0], it, ph);
   const box = el('div', 'email-set');
   const bar = el('div', 'chips'); bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Choose an email');
   let fig = null, cur = -1;
@@ -1252,7 +1281,7 @@ function emailSet(it) {
     if (n === cur) return;
     cur = n;
     chips.forEach((c, i) => { c.classList.toggle('on', i === n); c.setAttribute('aria-pressed', i === n ? 'true' : 'false'); });
-    const next = frame('Email', list[n].src, 'email', ph, it.title, list[n].overlays, list[n].label);
+    const next = emailPane(list[n], it, ph, list[n].label);
     if (fig) { fig._stop(); fig.replaceWith(next); } else box.append(next);
     fig = next;
   }
